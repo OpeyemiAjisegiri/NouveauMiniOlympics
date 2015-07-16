@@ -14,6 +14,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
+gem 'coffee-script-source', '1.8.0'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links inmysql your web application faster. Read more: https://github.com/rails/turbolinks
@@ -27,7 +29,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'rake'
 
 group :development, :test do
-  gem 'activerecord-mysql2-adapter'
+ # gem 'activerecord-mysql2-adapter'
   gem 'mysql2', '~> 0.3'
   gem 'byebug', '3.4.0'
   #gem 'web-console', '2.0.0.beta3'
