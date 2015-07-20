@@ -10,4 +10,11 @@ class User < ActiveRecord::Base
 
 	has_secure_password
 	validates :password, presence: true, length: { minimum: 6 }
+
+	has_one :profile, dependent: :destroy
+	after_create :build_default_profile
+
+	def build_default_profile
+		Profile.create(user_id: self.id)
+	end
 end
