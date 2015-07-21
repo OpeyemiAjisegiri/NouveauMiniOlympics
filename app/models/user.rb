@@ -15,6 +15,6 @@ class User < ActiveRecord::Base
 	after_create :build_default_profile
 
 	def build_default_profile
-		Profile.create(user_id: self.id)
+		#Profile.create(user_id: self.id)
 	end
 end
