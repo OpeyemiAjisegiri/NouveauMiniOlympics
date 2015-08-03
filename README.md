@@ -48,6 +48,3 @@ Database adapter	mysql2
 
 ################Extra Info##
 Due to the Javascript error similar to the questions on these two pages http://stackoverflow.com/questions/12520456/execjsruntimeerror-on-windows-trying-to-follow-rubytutorial/14118913#14118913, solution by @Kevin P and http://stackoverflow.com/questions/28421547/rails-execjsprogramerror-in-pageshome/28436913#28436913, Solution by @evedovelli. I dumbed down the gem coffee-script-source from the most current '1.9.1.1' to the older '1.8.0', by adding "gem 'coffee-script-source', '1.8.0'" to the gemfile; thereby using the solution on the second page and it worked.
-
-
-## Restrict User index later in app/views/layouts/_header.html.erb, so that only logged in admin users (can see every user and which team they are registered with) and a fellow team member can see users on that team
