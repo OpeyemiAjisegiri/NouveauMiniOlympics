@@ -3,8 +3,26 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %>
-     <%= render 'fields', f: f %>
+    <%= form_for(setup_user(@user)) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+      <%= f.fields_for :profile do |ff| %>
+        <%= ff.label :name %>
+        <%= ff.text_field :name, class: 'form-control' %>
+      <% end %>
+      <%= render 'fields', f: f %>
+      <%= f.fields_for :profile do |ff| %>
+        <%= ff.label :street %>
+        <%= ff.text_field :street, class: 'form-control' %>
+
+        <%= ff.label :city %>
+        <%= ff.text_field :city, class: 'form-control' %>
+
+        <%= ff.label :state %>
+        <%= ff.text_field :state, class: 'form-control' %>
+
+        <%= ff.label :zipcode %>
+        <%= ff.text_field :zipcode, class: 'form-control' %>
+      <% end %>
      <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
   </div>

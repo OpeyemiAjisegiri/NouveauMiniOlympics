@@ -5,30 +5,19 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
     @admin = users(:michael)
     @non_admin = users(:archer)
+   @profile = @user.build_profile( name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
   end
 
-  test "index including pagination" do
-    log_in_as(@user)
-    get users_path
-    assert_template 'users/index'
-    assert_select 'div.pagination'
-    User.paginate(page: 1).each do |user|
-      # THe next line checks that the name of the user is equal to the one
-      # produced by the user in 'a[href=?]'; try checking for mail instead, as the user model doesn't include name.
-      #assert_select 'a[href=?]', user_path(user), text: user.name
-    end
-  end
 
   test "index as admin including pagination and delete links" do
     log_in_as(@admin)
     get users_path
     assert_template 'users/index'
     assert_select 'div.pagination'
-    first_page_of_users = User.paginate(page: 1)
+    first_page_of_users = User.paginate(page: 1, per_page: 15)
     first_page_of_users.each do |user|
-      # assert_select_email  user_path(user), email: user.email
-      assert_select 'a[href=?]', user_path(user), text: user.name
-      unless user == @admin
+      assert_select 'a[href=?]', user_path(user), text: user.email
+      unless user = @admin  
         assert_select 'a[href=?]', user_path(user), text: 'delete'
       end
     end

@@ -4,6 +4,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:michael)
+    @user.profile = @profile = profiles(:bruce)
   end
 
   test "login with invalid information" do
@@ -16,36 +17,43 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert flash.empty?
   end
 
+
   test "login with valid information" do
     get login_path
     post login_path, session: { email: @user.email, password: 'password' }
-    assert_redirected_to @user
+    assert is_logged_in?
+    assert_redirected_to user_profile_path(@user)
     follow_redirect!
-    assert_template 'users/show'
+    assert_template 'profiles/show'
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
-    assert_select "a[href=?]", user_path(@user)
+    assert_select "a[href=?]", user_profile_path(@user)  
   end
 
+  # Test was failing because the line '<li><%= link_to "Log In", login_path %></li>' was removed from the header file 
+  # and replaced with '<li><a href= /login><span class="glyphicon glyphicon-log-in"></span> Login</a></li>'. 
+  # Therefore when the home page is loaded 'login_path' isn't found but rather 'a href = Log In'. Though the code works.
+  # The test also passed when replacing the line '<li><%= link_to "Log In", login_path %></li>' with '<li><a href= "/login">Log In</a></li>'
   test "login with valid information followed by logout" do
     get login_path
     post login_path, session: { email: @user.email, password: 'password' }
     assert is_logged_in?
-    assert_redirected_to @user
+    assert_redirected_to user_profile_path(@user)
     follow_redirect!
-    assert_template 'users/show'
+    assert_template 'profiles/show'
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
-    assert_select "a[href=?]", user_path(@user)
+    assert_select "a[href=?]", user_profile_path(@user)                #user_profile_path(@user,@profile)
     delete logout_path
     assert_not is_logged_in?
     assert_redirected_to root_url
     # Simulate a user clicking logout in a second window.
     delete logout_path
     follow_redirect!
+    #assert_select "a[href=?]", root_path
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", logout_path,      count: 0
-    assert_select "a[href=?]", user_path(@user), count: 0
+    assert_select "a[href=?]", user_profile_path(@user), count: 0
   end
 
   test "login with remembering" do

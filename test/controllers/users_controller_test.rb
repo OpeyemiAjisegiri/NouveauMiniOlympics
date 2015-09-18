@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
 
   def setup
+   # @user = User.new( email: "user@example.com",password: "foobar", password_confirmation: "foobar")
   	@user = users(:michael)
     @other_user = users(:archer)
   end
@@ -51,5 +52,23 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, id: @user
     end
     assert_redirected_to root_url
+  end
+
+ # Testing to make sure the user profile is created; but does it need to be tested. 
+ # test "associated profile should be created" do
+ #   assert_difference 'Profile.count', 1 do
+ #     get :create, user: @user.attributes
+ #     @user.build_profile(name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
+ #     assert flash.empty?
+ #     @user.save
+ #   end
+ # end
+
+  test "associated profile should be destroyed" do
+    @user.save
+    @user.create_profile!(name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
+    assert_difference 'profiles.count', 0 do
+      @user.destroy
+    end
   end
 end

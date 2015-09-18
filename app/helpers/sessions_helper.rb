@@ -16,7 +16,15 @@ module SessionsHelper
     def current_user?(user)
       user == current_user
     end
+
+  def current_profile?(profile)
+    profile.user_id == session[:user_id]
+  end
     
+  #def current_user?.profile(profile)
+   # profile.user_id == current_user.id
+  #end
+
 	#Returns the currently logged-in user(if any)
 	def current_user
        if (user_id = session[:user_id])

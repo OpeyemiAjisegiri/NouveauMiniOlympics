@@ -4,9 +4,10 @@ class UsersEditTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:michael)
+    @user.profile = profiles(:curtis)
   end
 
-  test "unsuccessful edit" do
+  test "unsuccessful user edit" do
   	log_in_as(@user)
     get edit_user_path(@user)
     assert_template 'users/edit'
@@ -16,7 +17,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_template 'users/edit'
   end
 
-  test "successful edit" do
+  test "successful user edit" do
   	log_in_as(@user)
     get edit_user_path(@user)
     assert_template 'users/edit'
@@ -26,12 +27,14 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                     password:              "",
                                     password_confirmation: "" }
     assert_not flash.empty?
-    assert_redirected_to @user
+    assert_redirected_to user_profile_path(@user)
+    # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 
+    # search for the profile, but rather the foreign key 'user_id'; making the '@profile' redundant.
     @user.reload
     assert_equal email, @user.email
   end
 
-  test "successful edit with friendly forwarding" do
+  test "successful user edit with friendly forwarding" do
     get edit_user_path(@user)
     log_in_as(@user)
     assert_redirected_to edit_user_path(@user)
@@ -41,8 +44,11 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                     password:              "",
                                     password_confirmation: "" }
     assert_not flash.empty?
-    assert_redirected_to @user
+    assert_redirected_to user_profile_path(@user)
+    # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 
+    # search for the profile, but rather the foreign key 'user_id'; making the '@profile' redundant.
     @user.reload
     assert_equal email, @user.email
   end
+
 end

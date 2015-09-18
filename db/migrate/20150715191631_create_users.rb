@@ -8,5 +8,18 @@ class CreateUsers < ActiveRecord::Migration
 
         t.timestamps null: false
     end
+
+    create_table :profiles do |t|
+    	t.references :user
+    	t.string :name
+    	t.string :sex
+    	t.string :street
+    	t.string :city
+    	t.string :state
+    	t.string :zipcode
+    	t.string :sex
+
+    	t.timestamps null: false
+    end
   end
 end
