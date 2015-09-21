@@ -1,12 +1,15 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-<<<<<<< HEAD
-=======
   
   def setup
     @user = users(:michael)
     @other_user = users(:archer)
+  end
+
+  test "should get new" do
+    get :new
+    assert_response :success
   end
 
   test "should redirect index when not logged in" do
@@ -14,14 +17,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
->>>>>>> updating-users
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-<<<<<<< HEAD
-=======
   test "should redirect edit when not logged in" do
     get :edit, id: @user
     assert_not flash.empty?
@@ -63,5 +58,4 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
->>>>>>> updating-users
 end
