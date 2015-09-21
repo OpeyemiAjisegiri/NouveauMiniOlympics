@@ -50,7 +50,7 @@ GEM
     columnize (0.9.0)
     debugger-linecache (1.2.0)
     erubis (2.7.0)
-    execjs (2.5.2)
+    execjs (2.6.0)
     faker (1.4.2)
       i18n (~> 0.5)
     ffi (1.9.10-x86-mingw32)
@@ -87,14 +87,14 @@ GEM
     mini_backtrace (0.1.3)
       minitest (> 1.2.0)
       rails (>= 2.3.3)
-    minitest (5.7.0)
+    minitest (5.8.0)
     minitest-reporters (1.0.5)
       ansi
       builder
       minitest (>= 5.0)
       ruby-progressbar
     multi_json (1.11.2)
-    mysql2 (0.3.18-x86-mingw32)
+    mysql2 (0.3.20-x86-mingw32)
     nenv (0.2.0)
     notiffany (0.0.6)
       nenv (~> 0.1)
@@ -124,7 +124,7 @@ GEM
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.4)
-    rails_stdout_logging (0.0.3)
+    rails_stdout_logging (0.0.4)
     railties (4.1.8)
       actionpack (= 4.1.8)
       activesupport (= 4.1.8)
@@ -166,9 +166,9 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2015.5)
+    tzinfo-data (1.2015.6)
       tzinfo (>= 1.0.0)
-    uglifier (2.7.1)
+    uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     will_paginate (3.0.7)

@@ -14,8 +14,15 @@
 ActiveRecord::Schema.define(version: 20150720224924) do
 
   create_table "profiles", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "sex"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: true do |t|

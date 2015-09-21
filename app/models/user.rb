@@ -13,12 +13,13 @@ class User < ActiveRecord::Base
 	has_secure_password
 	validates :password, presence: true, length: { minimum: 6 }
 
-	has_one :profile, dependent: :destroy
-	after_create :build_default_profile
+	has_one :profile, inverse_of: :user, dependent: :destroy
+	#after_create :build_default_profile
+	accepts_nested_attributes_for :profile
 
    
 	def build_default_profile
-		#Profile.create(user_id: self.id)
+		Profile.create(user: self)
 	end
     
     class << self

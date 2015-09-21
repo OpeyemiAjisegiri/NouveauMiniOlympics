@@ -4,8 +4,50 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+#one: {}
 # column: value
 #
-two: {}
+#two: {}
 #  column: value
+
+curtis:
+ name: Micheal Example
+ street: 24 Martins St. 
+ city: Waterloo
+ state: AW
+ zipcode: 22456
+ user: michael
+
+bruce:
+ name: Bruce Wayne
+ street: 1 Batman lane. 
+ city: Heroland
+ state: PA
+ zipcode: 12356
+ user: archer
+
+Alyssa:
+ name: Lyssa Cousins
+ street: 12 Portmore Ave 
+ city: hagerstown
+ state: MD
+ zipcode: 21751
+ user: lana
+
+lisa:
+ name: Mallory Cousins
+ street: 12 Portmore Ave 
+ city: hagerstown
+ state: MD
+ zipcode: 21751
+ user: mallory
+
+<% 30.times do |n| %>
+profile_<%= n %>:
+   state: EA
+   zipcode: 12345
+   name: <%= "profile-#{n}  Example-#{n}" %>
+   street: <%= "profile-#{n} Lane St." %> 
+   city: <%= "user-#{n}city" %>
+
+<% end %>

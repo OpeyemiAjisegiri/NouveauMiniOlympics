@@ -10,7 +10,15 @@ class UsersController < ApplicationController
 
   def new
   	@user = User.new
-  	#@profile = self.build_default_profile
+   # @profile = @user.profile
+    @profile = @user.build_profile
+    # The above line worked just as the below line
+    # but when the 'build_default_profile' is defined in the user model
+    # it restricts the values passed into the profile's database table 
+    # though it works perfectly well in rails 3, 
+    # also there was a weird mis-coloration in the form (blue -> user attributes and red -> profile attributes).. 
+    # The 'build_profile' is a default rails method for has_one association 'build_association'
+  	#@profile = @user.build_default_profile
   end
 
   def create
@@ -18,7 +26,9 @@ class UsersController < ApplicationController
   	if @user.save
       log_in @user
   		flash[:success] = "Welcome to the Mini Olympics"
-  		redirect_to @user
+  		redirect_to user_profile_path(current_user)  
+      # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 
+      # search for the profile, but rather the foreign key 'user_id'; making the '@profile' redundant.
   	else
   		render 'new'
   	end
@@ -35,8 +45,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
+      flash[:success] = "profile updated"
+      #redirect_to @user
+      redirect_to user_profile_path(current_user)
     else
       render 'edit'
     end
@@ -51,8 +62,8 @@ class UsersController < ApplicationController
   private
 
     def user_params
-    	params.require(:user).permit(:id, :email, :password, :password_confirmation, profile_attributes: [:name, 
-    		:address, :sex] )
+    	params.require(:user).permit(:id, :email, :password, :password_confirmation, profile_attributes: [:id, :name, 
+    		:street, :city, :state, :zipcode] )
     end
 
 

@@ -12,7 +12,7 @@
 
 michael:
  # Don't have name feature in my user's model
- # name: Michael Example
+ #name: Michael Example
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
   admin: true
@@ -38,3 +38,5 @@ user_<%= n %>:
   email: <%= "user-#{n}@example.com" %>
   password_digest: <%= User.digest('password') %>
 <% end %>  
+
+
