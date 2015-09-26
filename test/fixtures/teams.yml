@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+#one:
+#  teamname: MyString
+
+#two:
+#  teamname: MyString
+
+bears:
+  teamname: Brown bears
+  teamcolor: brown
+
+warriors:
+  teamname: Golden warriors
+  teamcolor: yellow
+
+angels:
+  teamname: White angels
+  teamcolor: White
+
+panthers:
+  teamname: Blue panthers
+  teamcolor: Blue
+
+gunters:
+  teamname: County gunters
+  teamcolor: grey
+
+<% 30.times do |n| %>
+team_<%= n %>:
+  teamname: <%= "team-#{n} panthers" %>
+  teamcolor: <%= "#{n}color" %>
+<% end %> 
