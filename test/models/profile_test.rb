@@ -6,9 +6,9 @@ class ProfileTest < ActiveSupport::TestCase
     #@profile = profiles(:curtis)
   end
 
- # test "should be valid" do
- #   assert @profile.valid?
- # end
+  test "should be valid" do
+    assert @profile.valid?
+  end
 
   test "name should be present" do
     @profile.name = "     "

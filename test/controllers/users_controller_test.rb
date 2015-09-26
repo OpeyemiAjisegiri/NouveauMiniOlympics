@@ -59,15 +59,18 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
- # Testing to make sure the user profile is created; but does it need to be tested. 
- # test "associated profile should be created" do
- #   assert_difference 'Profile.count', 1 do
- #     get :create, user: @user.attributes
- #     @user.build_profile(name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
- #     assert flash.empty?
- #     @user.save
- #   end
- # end
+ # Testing to make sure the user profile is created;
+ # but does it need to be tested? 
+ # It's testing rails' build_assiociation function
+  test "associated profile should be created" do
+    assert_difference 'Profile.count', 1 do
+      get :create, user:  {email: "test@example.net", password: "example", profile_attributes: {name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456"}}
+      #user.create_profile(name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
+      assert_not flash.empty?
+      # The line below gives an error bout the user_id for the show action
+      #assert_redirected_to user_profile_path, user: {email: "test@example.net", password: "example", profile_attributes: {name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456"}}
+    end
+  end
 
   test "associated profile should be destroyed" do
     @user.save
