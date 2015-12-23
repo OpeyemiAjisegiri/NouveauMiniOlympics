@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :update]
+  before_action :correct_user,   only: [:edit, :update, :select_team]
   before_action :admin_user,     only: :destroy
 
   def index
@@ -26,7 +26,11 @@ class UsersController < ApplicationController
   	if @user.save
       log_in @user
   		flash[:success] = "Welcome to the Mini Olympics"
-  		redirect_to user_profile_path(current_user)  
+  		if @user.admin?
+        redirect_to admin_user_profile_path(current_user)  
+      else
+        redirect_to user_profile_path(current_user)
+      end   
       # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 
       # search for the profile, but rather the foreign key 'user_id'; making the '@profile' redundant.
   	else
@@ -43,11 +47,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+   # @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "profile updated"
       #redirect_to @user
-      redirect_to user_profile_path(current_user)
+      if @user.admin?
+        redirect_to admin_user_profile_path(current_user)  
+      else
+        redirect_to user_profile_path(current_user)
+      end 
     else
       render 'edit'
     end
@@ -59,10 +67,20 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  def select_team
+    current_user.update_attribute(:team_id, @team)
+  end
+
+  def team_selection
+
+    "redirect_to user_profile_path(current_user)"
+  end
+
+
   private
 
     def user_params
-    	params.require(:user).permit(:id, :email, :password, :password_confirmation, profile_attributes: [:id, :name, 
+    	params.require(:user).permit(:id, :email, :password, :password_confirmation,:team_id, profile_attributes: [:id, :name, 
     		:street, :city, :state, :zipcode] )
     end
 

@@ -9,7 +9,10 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(team_params)
+    @team.captain = current_user
     if @team.save!
+      @team.update_attribute(:captain_id, current_user.id)
+      current_user.update_attribute(:team_id, @team.id)
       flash[:success] = "Team created."
       redirect_to @team
     else
@@ -21,6 +24,7 @@ class TeamsController < ApplicationController
   def show
   	#@team = Team.find(id: params[:id])
   	@team = Team.find(params[:id])
+    @teams = @team.users.paginate(page: params[:page])
   end
 
   def edit
@@ -67,7 +71,7 @@ class TeamsController < ApplicationController
       unless logged_in?
         store_location
         flash[:danger] = "Please log in."
-        redirect_to login_url
+        redirect_to login_url  
       else
         #flash[:danger] = "Sorry, you don't have the authority to do that."
         redirect_to(user_profile_path(current_user)) unless current_user.admin?

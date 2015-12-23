@@ -14,8 +14,16 @@ class User < ActiveRecord::Base
 	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
 	has_one :profile, inverse_of: :user, dependent: :destroy
+    has_many :teammates, :class_name => "User", :foreign_key => "captain_id"
+    
+    belongs_to :captain, :class => "User"
+    belongs_to :team
+
+
+
 	#after_create :build_default_profile
 	accepts_nested_attributes_for :profile
+	accepts_nested_attributes_for :team
 
    
 	def build_default_profile

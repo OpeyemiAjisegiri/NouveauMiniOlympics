@@ -17,6 +17,7 @@ curtis:
  state: AW
  zipcode: 22456
  user: michael
+ #category: micheal
 
 bruce:
  name: Bruce Wayne
@@ -25,6 +26,7 @@ bruce:
  state: PA
  zipcode: 12356
  user: archer
+ #category: archer
 
 Alyssa:
  name: Lyssa Cousins
@@ -33,6 +35,7 @@ Alyssa:
  state: MD
  zipcode: 21751
  user: lana
+ #category: Alyssa
 
 lisa:
  name: Mallory Cousins
@@ -41,9 +44,12 @@ lisa:
  state: MD
  zipcode: 21751
  user: mallory
+ #category: lisa
 
 <% 30.times do |n| %>
 profile_<%= n %>:
+   user: "user-#{n}"
+   #category:"user-#{n}"
    state: EA
    zipcode: 12345
    name: <%= "profile-#{n}  Example-#{n}" %>

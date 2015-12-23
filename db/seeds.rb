@@ -19,29 +19,7 @@ User.create!( email: "example@test.org",
                 #sex: "Male" 
               }
             )
-#auser.profile.create!( name: "Example Test",
-#               street: "75 Barracks Rd",
-#               city: "Waterloo",
-#               state: "AW", 
-#               zipcode: "23455",
-#               #sex: "Male"
-#                )
 
-#99.times do |n|
-#  name  = Faker::Name.name
-#  email = "example-#{n+1}@railstutorial.org"
-#  street = Faker::Address.street_address
-#  city = Faker::Address.city
-#  state = Faker::Address.state_abbr
-#  zipcode = Faker::Address.zip_code
-#  password = "password"
-#  User.create!(email: email,
-#               password:              password,
-#               password_confirmation: password,  
-#               profile_attributes: {name: name, street: street, city: city, state: state, zipcode: zipcode })
-  #n.profile.create!( name: name, street: street, city: city, state: state, zipcode: zipcode ) 
-  #n.each { |user| user.profile.create( name: name, street: street, city: city, state: state, zipcode: zipcode) }
-#end
 
 99.times do |n|
   User.create!(
@@ -57,3 +35,12 @@ User.create!( email: "example@test.org",
     }
   )
 end
+
+
+Team.create!(teamname: "White Angels",
+             teamcolor: "white"
+             )
+
+Team.create!(teamname: "Blue Panthers",
+             teamcolor: "blue"
+             )

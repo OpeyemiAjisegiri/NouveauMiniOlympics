@@ -13,10 +13,25 @@ Rails.application.routes.draw do
   delete 'logout'  => 'sessions#destroy'
 
   resources :users do
-    resource :profile, only: [:show, :edit, :update ]
+    get :select_team, on: :member
+    resource :profile, only: [:show, :edit, :update ] 
   end
 
   resources :teams
+
+  
+  namespace :admin do
+    resources :users do
+      #get :select_team, on: :member
+      resource :profile, only: [:show, :edit, :update ] 
+    end
+    resources :teams
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+    end
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

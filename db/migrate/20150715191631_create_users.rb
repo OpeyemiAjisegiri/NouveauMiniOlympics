@@ -5,6 +5,8 @@ class CreateUsers < ActiveRecord::Migration
     	t.string :password_digest
     	t.string :remember_digest
     	t.boolean :admin, default: false
+        t.references :captain, index: true
+        t.references :team
 
       t.timestamps null: false
     end
@@ -17,7 +19,7 @@ class CreateUsers < ActiveRecord::Migration
     	t.string :city
     	t.string :state
     	t.string :zipcode
-    	t.string :sex
+    	#t.string :sex
 
     	t.timestamps null: false
     end

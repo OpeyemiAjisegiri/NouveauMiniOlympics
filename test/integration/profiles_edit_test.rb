@@ -3,8 +3,8 @@ require 'test_helper'
 class ProfilesEditTest < ActionDispatch::IntegrationTest   
 
   def setup
-    @user = users(:michael)
-    @user.profile = profiles(:curtis)
+    @user = users(:archer)
+    @user.profile = profiles(:bruce)
   end
 
   # Not sure how an unsuccessful profile edit can be 

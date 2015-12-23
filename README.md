@@ -48,3 +48,10 @@ Database adapter	mysql2
 
 ################Extra Info##
 Due to the Javascript error similar to the questions on these two pages http://stackoverflow.com/questions/12520456/execjsruntimeerror-on-windows-trying-to-follow-rubytutorial/14118913#14118913, solution by @Kevin P and http://stackoverflow.com/questions/28421547/rails-execjsprogramerror-in-pageshome/28436913#28436913, Solution by @evedovelli. I dumbed down the gem coffee-script-source from the most current '1.9.1.1' to the older '1.8.0', by adding "gem 'coffee-script-source', '1.8.0'" to the gemfile; thereby using the solution on the second page and it worked.
+
+
+
+
+So far, did the creation of captain. basically the captain is the administrative creator of the team, need to work on the admin assign the captainship role to another participant(user).
+#######################################################################
+On the Admin branch, took out the "has_many :profiles :through :users" as it was complicating the views, replacing it with the simple "has_many :users". This gives access to the user who has all the foreign keys stored in his DB table and has a one to one relationship with profile, thereby I'm able to use "user.profile.whatever"

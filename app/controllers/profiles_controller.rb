@@ -21,13 +21,18 @@ class ProfilesController < ApplicationController
 	    #@profile = User.find(params[:user_id]).profile 
         if @profile.update_attributes(profile_params)
           flash[:success] = "profile updated"
-          redirect_to user_profile_path(current_user)
+          if current_user.admin?
+            redirect_to admin_user_profile_path(current_user)
+          else
+            redirect_to user_profile_path(current_user)
           # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 
           # search for the profile, but rather the foreign key 'user_id'; making the '@profile' redundant.
+          end
         else
           render 'edit'
         end
     end
+
 
 
 	 private
