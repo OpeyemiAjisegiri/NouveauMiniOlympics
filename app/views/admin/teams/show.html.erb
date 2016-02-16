@@ -1,0 +1,16 @@
+<% provide(:title, @team.teamname) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="team_info">
+      <h1>
+        <%= @team.teamname %>
+      </h1>
+      <p>
+        <%= @team.teamcolor %><br>
+      </p>
+      <p>
+        <%= @team.captain.profile.name %><br>
+      </p>
+    </section>
+  </aside>
+</div>
