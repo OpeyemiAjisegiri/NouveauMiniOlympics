@@ -5,7 +5,8 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
     @admin = users(:michael)
     @non_admin = users(:archer)
-   @profile = @user.build_profile( name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
+    @admin.profile = profiles(:curtis)
+   #@profile = @admin.build_profile( name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
   end
 
 
@@ -16,6 +17,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     first_page_of_users = User.paginate(page: 1, per_page: 15)
     first_page_of_users.each do |user|
+      #assert_select 'a[href=?]', user_path(user), text: user.profile.name     
       assert_select 'a[href=?]', user_path(user), text: user.email
       unless user = @admin  
         assert_select 'a[href=?]', user_path(user), text: 'delete'
