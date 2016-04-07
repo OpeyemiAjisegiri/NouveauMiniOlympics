@@ -16,6 +16,7 @@ michael:
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
   admin: true
+  team: warriors
 
 archer:
   #name: Sterling Archer
@@ -38,6 +39,7 @@ mallory:
 <% 30.times do |n| %>
 user_<%= n %>:
   #name:  <%= "User #{n}" %>
+  team: "team-#{n}"
   email: <%= "user-#{n}@example.com" %>
   password_digest: <%= User.digest('password') %>
 <% end %>  

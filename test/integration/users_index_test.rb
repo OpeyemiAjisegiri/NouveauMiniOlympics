@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class UsersIndexTest < ActionDispatch::IntegrationTest
+
+  #fixtures :all
+
   def setup
     @user = users(:michael)
     @admin = users(:michael)

@@ -3,8 +3,8 @@ require 'test_helper'
 class UsersSignupTest < ActionDispatch::IntegrationTest
 
  def setup
-    #@user = User.new(email: "foobar@test.com", password: "foobar", password_confirmation: "foobar")
-    #@profile = @user.profile = Profile.new(name: "Example Test", street: "24 Fred Rd", city: "Cutlin", state: "SW", zipcode: "35478")
+    @user = User.new(email: "foobar@test.com", password: "foobar", password_confirmation: "foobar")
+    @profile = @user.profile = Profile.new(name: "Example Test", street: "24 Fred Rd", city: "Cutlin", state: "SW", zipcode: "35478")
  end
   
   test "invalid signup information" do
@@ -27,12 +27,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     get signup_path
     assert_difference 'User.count', 1 do
 
-      ### Both sets of test works, with the first; I was trying to strictly follow how the 
-      ### server log potrays the create action: inserts into both user and profile database then gets user's profile 
-      ### but the line 'user.save' gave me concern leading to the second version. 
-      ### Also, the issue of 'user_id' or the full user hash played a role.
-
-
       #user = User.new(email: "foobar@test.com", password: "foobar", password_confirmation: "foobar")
       #user.build_profile(name: "Micheal platini", street: "2 FIFA St.", city: "Waterloo", state: "SW", zipcode: "87634")
       #user.save
@@ -43,12 +37,15 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
 
       #using 'post' in place of 'post_via_redirect' gives the error 'No route matches...missing keys: [:user_id]'
       # this is because 'post_via_redirect' posts to the user and session create action
-      # thereby saving ang logging in the usr a la 'def log_in_as(..)' and 'def integration_test?' in the test_helper.rb file
+      # thereby saving and logging in the user a la 'def log_in_as(..)' and 'def integration_test?' in the test_helper.rb file
       user = User.new
-      user = {email: "foobar@test.com", password: "foobar", password_confirmation: "foobar", profile_attributes: {name: "Micheal platini", street: "2 FIFA St.", city: "Waterloo", state: "SW", zipcode: "87634"}}
-      post_via_redirect users_path(user), user: user
+      user = @user
+      user.save    #Saves @user, thereby giving it an ':id' to avoid the 'missing ":user_id"' error by post_via_redirect; 
+                  #but post_via_redirect is supposed to save the user through post before redirecting to the user profile
+      #user = {email: "foobar@test.com", password: "foobar", password_confirmation: "foobar", profile_attributes: {name: "Micheal platini", street: "2 FIFA St.", city: "Waterloo", state: "SW", zipcode: "87634"}}
+      post_via_redirect users_path(user), user: user.attributes
       ###  debugger
-      get_via_redirect user_profile_path(user), user: user
+      get_via_redirect user_profile_path(user,@profile), user: user
       assert user_profile_path(user)
     end
     assert_template 'profiles/show'

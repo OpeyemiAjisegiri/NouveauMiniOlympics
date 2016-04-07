@@ -19,8 +19,7 @@
               <% if current_user.admin? %>
                  <li class="divider"></li>
                  <li><%= link_to "Create A Team", new_admin_team_path %></li>
-                 <li><%= link_to "Create A Sport",   '#' %></li>
-                 <li><%= link_to "Edit A Sports", '#' %></li>                
+                 <li><%= link_to "Create A Sport", new_admin_sport_path %></li>               
                  <li><%= link_to "Medals", '#' %></li>
                  <li class="divider"></li>
                   <li><%= link_to "Edit Profile", edit_admin_user_profile_path(current_user) %></li>

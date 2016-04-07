@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922032610) do
+ActiveRecord::Schema.define(version: 20160307035225) do
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -25,12 +25,28 @@ ActiveRecord::Schema.define(version: 20150922032610) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sports", force: true do |t|
+    t.string   "sportname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "teams", force: true do |t|
     t.string   "teamname"
     t.string   "teamcolor"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "teamsports", force: true do |t|
+    t.integer  "team_id"
+    t.integer  "sport_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "teamsports", ["sport_id"], name: "index_teamsports_on_sport_id", using: :btree
+  add_index "teamsports", ["team_id"], name: "index_teamsports_on_team_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"

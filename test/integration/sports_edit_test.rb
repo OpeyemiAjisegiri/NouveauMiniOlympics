@@ -1,14 +1,14 @@
 require 'test_helper'
 
-class TeamsEditTest < ActionDispatch::IntegrationTest
+class SportsEditTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:lana)
-    @team = teams(:warriors)
-    @other_team = teams(:gunters)
+    @sport = sports(:one)
+    @other_sport = sports(:five)
   end
 
-  test "team edit without admin priviledges" do
+  test "sport edit without admin priviledges" do
   	log_in_as(@user)
     #get edit_sport_path(@sport)
     ### No 'edit_sport_path' in routes.rb but the 

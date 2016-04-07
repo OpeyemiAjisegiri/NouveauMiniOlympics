@@ -24,7 +24,7 @@ class TeamIndexTest < ActionDispatch::IntegrationTest
       end
     end
     assert_difference 'Team.count', -1 do
-      delete team_path(@other_team)
+      delete admin_team_path(@other_team)
     end
   end
 

@@ -1,0 +1,19 @@
+<% provide(:title, @sport.sportname) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="sport_info">
+      <h1>
+        <%= @sport.sportname %>
+      </h1>
+      <p>
+        <%= label = "Participating Teams:" %>
+        <br>
+        <ul class="teams">
+          <% @sport.teams.each do |teams| %>
+             <%= render teams %>
+          <% end %>
+        </ul>
+      </p>
+    </section>
+  </aside>
+</div>
