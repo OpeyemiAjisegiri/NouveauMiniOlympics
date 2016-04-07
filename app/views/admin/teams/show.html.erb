@@ -9,8 +9,19 @@
         <%= @team.teamcolor %><br>
       </p>
       <p>
-        <%= @team.captain.profile.name %><br>
+        <%= label = "Team Captain:" %>
+        <%= captain_name(@team.captain) %><br>
       </p>
+      <br>
+      <p><%= link_to "Edit Team", edit_admin_team_path(@team) %>
+      </p>
+      <br>
+      <p>
+        <%= label = "Team Members:" %>
+        <ul class="users">
+          <% @team.users.each do |users| %>
+             <%= render users %>
+          <% end %>
     </section>
   </aside>
 </div>

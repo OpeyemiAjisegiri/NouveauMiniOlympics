@@ -1,0 +1,12 @@
+<% provide(:title, 'All Sports') %>
+<h1>Sports List</h1>
+
+<%= will_paginate %>
+
+<ul class="sports">
+  <% @sports.each do |sports| %>
+      <%= render sports %>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

@@ -12,12 +12,13 @@ class User < ActiveRecord::Base
 
 	has_secure_password
 	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+	#validates :team_id, presence: true
 
-	has_one :profile, inverse_of: :user, dependent: :destroy
-    has_many :teammates, :class_name => "User", :foreign_key => "captain_id"
+	has_one :profile, inverse_of: :user, dependent: :delete
+    has_many :teammates, :class_name => "User", :foreign_key => :captain_id
     
     belongs_to :captain, :class => "User"
-    belongs_to :team
+    belongs_to :team       #, inverse_of: :user
 
 
 

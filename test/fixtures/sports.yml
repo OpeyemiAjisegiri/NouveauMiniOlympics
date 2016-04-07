@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sportname: 100M Race
+
+two:
+  sportname: 50M Dash
+
+three:
+  sportname: 50M Relay
+
+four:
+  sportname: Egg-Spoon Race
+
+five:
+  sportname: Tennis
+
+six:
+  sportname: Soccer

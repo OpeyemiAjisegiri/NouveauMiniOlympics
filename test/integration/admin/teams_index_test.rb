@@ -24,13 +24,8 @@ class TeamIndexTest < ActionDispatch::IntegrationTest
       end
     end
     assert_difference 'Team.count', -1 do
-      delete team_path(@other_team)
+      delete admin_team_path(@other_team)
     end
   end
 
-  test "index as non-admin" do
-    log_in_as(@non_admin)
-    get teams_path
-    assert_select 'a', text: 'delete', count: 0
-  end
 end

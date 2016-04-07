@@ -13,8 +13,9 @@ class ProfilesController < ApplicationController
 	end
 
 	def show
-		@profile = User.find(params[:user_id]).profile 
+    @profile = User.find(params[:user_id]).profile
 		#'User.find(params[:user_id]).profile' is the same as 'Profile.find(params[:user_id])'
+    # due to the db relationship
 	end
 
 	def update
@@ -52,7 +53,9 @@ class ProfilesController < ApplicationController
 
     def correct_profile
       @profile = User.find(params[:user_id]).profile
-      redirect_to(root_url) unless current_profile?(@profile)     # '@profile.user_id == current_user.id' = 'current_profile?(@profile)'
+      redirect_to user_profile_path(current_user) unless current_profile?(@profile)     # '@profile.user_id == current_user.id' = 'current_profile?(@profile)'
+      #Also the line "redirect_to current_user unless current_profile?(@profile)" goes to the intended destination bu tjumps a lot of hoops through redirect;
+      #changing "redirect_to current_user" to "redirect_to user_profile_path(current_user)" reduced the redirecting over-head.
     end
 
 end

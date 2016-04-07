@@ -10,8 +10,11 @@ class Admin::TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     #@team.captain = current_user
+    #@team.sports<< Sport.all
+    ########  Could also be done by just adding the above line
+    ######## to a callback method in the teams model.
     if @team.save
-      @team.update_attribute(:captain_id, current_user.id)
+      current_user.update_attribute(:captain_id, @team.id)
       current_user.update_attribute(:team_id, @team.id)
       flash[:success] = "Team created."
       redirect_to admin_team_path(@team)
@@ -40,6 +43,7 @@ class Admin::TeamsController < ApplicationController
   	  if @team.update_attributes(team_params)
   		flash[:success] = "Team updated"
   		redirect_to admin_team_path(@team)
+      #redirect_to @team
   	  else
   		render 'edit'
   	  end

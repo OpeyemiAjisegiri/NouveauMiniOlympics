@@ -18,12 +18,12 @@ class Admin::ProfilesEditTest < ActionDispatch::IntegrationTest
     assert_template 'admin/profiles/edit'
   end
   
-  test "successful profile edit as an amin" do
+  test "successful profile edit as an admin" do
     #get edit_user_profile_path(@user, @profile)
     log_in_as(@user)
     get edit_admin_user_profile_path(@user, @profile)
     assert_template 'admin/profiles/edit'    
-    patch admin_user_profile_path(@user,@profile), profile: { name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456" }
+    patch admin_user_profile_path(@user,@profile), profile: {name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456" }      # "@user.profile.attributes" also works in place of the attributes
     assert_not flash.empty?
     assert_redirected_to admin_user_profile_path(@user, @profile)
     @user.profile.reload

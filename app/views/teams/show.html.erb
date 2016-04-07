@@ -10,7 +10,16 @@
       </p>
       <p>
         <%= label = "Team Captain:" %>
-        <%= @team.captain.profile.name %><br>
+        <%= captain_name(@team.captain) %><br>
+      </p>
+      <br><br>
+      <p>
+        <%= label = "Team Members:" %>
+        <ul class="users">
+          <% @team.users.each do |users| %>
+             <%= render users %>
+          <% end %>
+        </ul>
       </p>
     </section>
   </aside>

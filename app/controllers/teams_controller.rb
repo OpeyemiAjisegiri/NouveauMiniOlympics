@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
     @team.captain = current_user
     if @team.save!
-      @team.update_attribute(:captain_id, current_user.id)
+      current_user.update_attribute(:captain_id, @team.id)
       current_user.update_attribute(:team_id, @team.id)
       flash[:success] = "Team created."
       redirect_to @team
@@ -22,9 +22,15 @@ class TeamsController < ApplicationController
   end
 
   def show
-  	#@team = Team.find(id: params[:id])
-  	@team = Team.find(params[:id])
-    @teams = @team.users.paginate(page: params[:page])
+    if (params[:id]) == "new"
+      redirect_to user_profile_path(current_user)
+    else
+      @team = Team.find(params[:id])
+    end   
+  	#@team = Team.find(params[:id]) unless (params[:id]) == "new"
+    #else redirect_to user_profile_path(current_user)             
+    #####  the two above lines work but through a "else without rescue is useless" warning when test through rake test.
+    #@teams = @team.users.paginate(page: params[:page])
   end
 
   def edit

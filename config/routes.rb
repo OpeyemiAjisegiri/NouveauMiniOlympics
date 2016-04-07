@@ -17,7 +17,8 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :edit, :update ] 
   end
 
-  resources :teams
+  resources :teams, only: [:show, :index]
+  resources :sports, only: [:show, :index]
 
   
   namespace :admin do
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
       #get :select_team, on: :member
       resource :profile, only: [:show, :edit, :update ] 
     end
-    resources :teams
+    resources :teams, :sports
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
