@@ -1,6 +1,7 @@
 <li>
-    <%= link_to sport.sportname,        sport %>  ||
+    <%= link_to sport.sportname,        sport %>  
     <% if current_user.admin? %>
+      || <%= link_to "Edit Team",      edit_admin_sport_path(sport) %>
       | <%= link_to "delete", sport, method: :delete,
                            data: { confirm: "Are You sure?" } %>
   <% end %>

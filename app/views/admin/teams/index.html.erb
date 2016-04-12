@@ -10,3 +10,11 @@
 </ul>
 
 <%= will_paginate %>
+
+<br><br>
+
+<p>
+  <% if current_user.admin? %>
+     <%= link_to "Create a Team",      new_admin_team_path %>
+  <% end %>
+</p>

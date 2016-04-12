@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'contact' => 'static_pages#contact'
 
   get  'signup' => 'users#new'
+  
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
@@ -17,8 +18,10 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :edit, :update ] 
   end
 
-  resources :teams, only: [:show, :index]
-  resources :sports, only: [:show, :index]
+  resources :teams    #, only: [:show, :index, :update]
+  resources :sports   #, only: [:show, :index, :update]
+  ###### The function to redirect non admins works but without the full resouces for the links to be available, 
+  ###### it just throws routes errors
 
   
   namespace :admin do

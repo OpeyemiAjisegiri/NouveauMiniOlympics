@@ -12,7 +12,10 @@ class Team < ActiveRecord::Base
 
 
     #after_save :set_default_captain
-    after_save :team_sport_association
+    after_create :team_sport_association
+	#after_save :team_sport_association
+	#might have to switch the above line to 'after_create' as 
+    #a new association with every  team is created with every save while using 'after_save'
    
     accepts_nested_attributes_for :users
 	#accepts_nested_attributes_for :profiles
@@ -20,14 +23,14 @@ class Team < ActiveRecord::Base
 	accepts_nested_attributes_for :teamsports
 	accepts_nested_attributes_for :sports
 
-	"def set_default_captain
-	 if captain_id.changed?
-       profiles.each do |user|
-         user.captain = captain
-         user.save
-       end
-     end
-	end"
+	#def set_default_captain
+	# if captain_id.changed?
+    #   profiles.each do |user|
+    #     user.captain = captain
+    #     user.save
+    #   end
+    # end
+	#end
 
 
 	def team_sport_association
