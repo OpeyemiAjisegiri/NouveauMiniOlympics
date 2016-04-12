@@ -14,7 +14,7 @@ class TeamsController < ApplicationController
       current_user.update_attribute(:captain_id, @team.id)
       current_user.update_attribute(:team_id, @team.id)
       flash[:success] = "Team created."
-      redirect_to @team
+      redirect_to admin_team_path(@team)
     else
       flash[:error_messages]
       render 'new'
@@ -45,7 +45,7 @@ class TeamsController < ApplicationController
   	  @team = Team.find(params[:id]) 
   	  if @team.update_attributes(team_params)
   		flash[:success] = "Team updated"
-  		redirect_to @team
+  		redirect_to admin_team_path(@team)
   	  else
   		render 'edit'
   	  end

@@ -1,7 +1,8 @@
 <li>
-    <%= link_to team.teamname,        team %>  ||
+    <%= link_to team.teamname,        team %>  |
     <%= link_to team.teamcolor,       team %>
     <% if current_user.admin? %>
+      || <%= link_to "Edit Team",      edit_admin_team_path(team) %>
       | <%= link_to "delete", team, method: :delete,
                            data: { confirm: "Are You sure?" } %>
   <% end %>

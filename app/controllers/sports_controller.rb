@@ -12,7 +12,7 @@ class SportsController < ApplicationController
     if @sport.save
       #current_user.update_attribute(:team_id, @team.id)
       flash[:success] = "Sport created."
-      redirect_to @sport
+      redirect_to admin_sport_path(@sport)
     else
       flash[:error_messages]
       render 'new'
@@ -41,7 +41,7 @@ class SportsController < ApplicationController
     @sport = Sport.find(params[:id]) 
     if @sport.update_attributes(sport_params)
    	  flash[:success] = "Sport updated"
-  	  redirect_to @sport
+  	  redirect_to admin_sport_path(@sport)
   	else
   	  render 'edit'
   	end 	
@@ -71,10 +71,10 @@ class SportsController < ApplicationController
     # Confirms an admin user.
     def admin_user
       unless logged_in?
-       # store_location
-       # flash[:danger] = "Please log in."
-       # redirect_to login_url  
-      #else
+       store_location
+       flash[:danger] = "Please log in."
+       redirect_to login_url  
+      else
         redirect_to(user_profile_path(current_user)) unless current_user.admin?
       end
     end

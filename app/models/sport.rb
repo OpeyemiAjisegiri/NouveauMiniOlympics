@@ -1,6 +1,5 @@
 class Sport < ActiveRecord::Base
 
-	after_save :team_sport_association
 
 	validates :sportname, presence: true, 
 	                         uniqueness: { case_sensitive: false }
@@ -10,6 +9,11 @@ class Sport < ActiveRecord::Base
 
 	accepts_nested_attributes_for :teamsports
 	accepts_nested_attributes_for :teams
+
+	after_create :team_sport_association
+	#after_save :team_sport_association
+	#might have to switch the above line to 'after_create' as 
+    #a new association with every  team is created with every save while using 'after_save'
 
     # I think it needs to be in the concern folder for the controller, 
     # as the first line in the function works when in the create function of sports controller 
