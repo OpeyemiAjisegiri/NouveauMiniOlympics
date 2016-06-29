@@ -45,7 +45,12 @@ class Admin::SportsControllerTest < ActionController::TestCase
     assert_redirected_to user_profile_path(@other_user)
   end
 
-  
+  test "should redirect create when not logged in" do
+    get :create, id: @sport
+    assert_not flash.empty?
+    assert_redirected_to login_url
+  end
+
   test "should redirect edit when not logged in" do
     get :edit, id: @sport
     assert_not flash.empty?
@@ -56,6 +61,29 @@ class Admin::SportsControllerTest < ActionController::TestCase
     patch :update, id: @sport
     assert_not flash.empty?
     assert_redirected_to login_url
+  end
+
+  #test "associated medal should be created" do
+   #assert_difference 'Medal.count', 1 do
+      ## The next line prolly throwing a "Medal.count didn't change by 1" error due to the usage of callback functionality
+      ## and not from form input.
+      #get :create, sport: {sportname: "Frisbee", medal_attributes: {gold: "nil", silver: "nil", bronze: "nil"}}
+     # assert_not flash.empty?
+      # The line below gives an error bout the user_id for the show action
+      #assert_redirected_to admin_sport_path, sport:  {sportname: "Frisbee", medal_attributes: {gold: "nil", silver: "nil", bronze: "nil"}}
+   #end
+  #end
+
+  test "associated medal should be destroyed" do
+    @sport.save
+    @sport.create_medal!  
+    ## I didn't put the medal attributes as they are foreign keys =>
+    ## #(gold_id: "nil", silver_id: "nil", bronze_id: "nil")
+    ## Using the above line works but without adding the "_id"s it doesn't, 
+    ## but that's opening access to the foreign keys.
+    assert_difference 'medals.count', 0 do
+      @sport.destroy
+    end
   end
 
 end

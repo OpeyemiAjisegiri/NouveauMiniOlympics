@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307035225) do
+ActiveRecord::Schema.define(version: 20160506205940) do
+
+  create_table "medals", force: true do |t|
+    t.integer  "sport_id"
+    t.integer  "gold_id"
+    t.integer  "silver_id"
+    t.integer  "bronze_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "medals", ["bronze_id"], name: "index_medals_on_bronze_id", using: :btree
+  add_index "medals", ["gold_id"], name: "index_medals_on_gold_id", using: :btree
+  add_index "medals", ["silver_id"], name: "index_medals_on_silver_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'sports/new'
-
   root             'static_pages#home'
   
   get 'help'    => 'static_pages#help'
@@ -21,20 +19,23 @@ Rails.application.routes.draw do
   end
 
   resources :teams    #, only: [:show, :index, :update]
-  resources :sports   #, only: [:show, :index, :update]
+  resources :sports 
+   #, only: [:show, :index, :update] 
   ###### The function to redirect non admins works but without the full resouces for the links to be available, 
   ###### it just throws routes errors
-
   
   namespace :admin do
     resources :users do
       #get :select_team, on: :member
       resource :profile, only: [:show, :edit, :update ] 
     end
-    resources :teams, :sports
+    resources :teams
+    resources :sports do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
+        resource :medal, only: [:show, :edit, :update ]
+      end
     end
 
 

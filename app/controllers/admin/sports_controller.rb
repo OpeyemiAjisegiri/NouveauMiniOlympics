@@ -6,6 +6,16 @@ class Admin::SportsController < ApplicationController
   
   def new
   	@sport  = Sport.new
+   # @medal = @sport.build_medal   
+    ### The line @medal = @sport.build_medal is currently working as
+    ### i'm using a hidden field in the sport new
+    ### form but i could also do the call back for security reasons 
+    ### (due to user input and possible accesibility), any user can see it by just right clicking 
+    ### and checking for the page source (major security issue) but having issues using that with seeding the DB.
+    ### The after_create callback creates another column for the sport filled with nill
+    ### after persisting the data I want seeding for the sport's medal.
+    ### Also, when  I change to the callback function, i need to take off the medal attributes 
+    ### off the whitelisted sport attributes in the permit function.
   end
 
   def create
@@ -15,9 +25,10 @@ class Admin::SportsController < ApplicationController
     ######## to a callback method in the sports model.
     if @sport.save
       flash[:success] = "Sport created."
-      # The line below works but i prolly need to move or switch it depending on if i need / want the association to be created
-      # when a user registers to play the sport or when both the sport and teams are created.
-      #@sport.teams<< current_user.team     #@teams# @team.all 
+      ## The line below works but i prolly need to move or switch it depending on if
+      ## i need / want the association to be created
+      ## when a user registers to play the sport or when both the sport and teams are created.
+      ## @sport.teams<< current_user.team     #@teams# @team.all 
       redirect_to admin_sport_path(@sport)
     else
       flash[:error_messages]
@@ -58,7 +69,9 @@ class Admin::SportsController < ApplicationController
   private
 
     def sport_params
-    	params.require(:sport).permit(:id, :sportname)
+    	params.require(:sport).permit(:id, :sportname, medal_attributes: [:id])   
+      #, :sport_id, :gold_id, :silver_id, :bronze_id])  
+      ### Foreign keyshould never be whitelisted and avalable for editting!!!!!
     end
 
     # Confirms a logged-in user.

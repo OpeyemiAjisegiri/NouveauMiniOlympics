@@ -1,11 +1,54 @@
-<footer class="footer">
-  <small>
-    The Mini Olympics web application | JHDC
-  </small>
-  <nav>
-    <ul>
-      <li><%= link_to "About",   about_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
-    </ul>
-  </nav>
+<footer class="navbar navbar-fixed-bottom navbar-inverse">
+  <!-- <div class="container"> -->
+    <small>
+      <!--  social media links -->
+      <!-- <div class="animation fadeInUp">
+        <ul class="smb px48 bringUp circle right20">
+          <li class="facebook"><a href="http://facebook.com/RCCGJHDC" target="_blank"></a></li>
+          <li class="twitter"><a href="http://twitter.com/JesusHouseDC" target="_blank"></a></li>
+          <li class="instagram"><a href="https://instagram.com/jesushouse_dc" target="_blank"></a></li>
+        </ul>
+      </div> -->
+
+      <!-- <li class="facebook"><a href= "http://facebook.com/RCCGJHDC"><i class="fa fa-facebook-official"></i> Facebook</a></li>
+      <li><a href= "/#" ><i class="icon-large icon-twitter-t"></i> Twiter </a></li>-->
+      <!-- <li><a href= "#" ><span class="glyphicon glyphicon-log-in"></span> Instagram</a></li> -->
+    </small>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "About",   about_path %></li>
+        <li><%= link_to "Contact", contact_path %></li>
+      </ul>
+    </nav>
+    
+    <div class="footer">
+      <div class="second footer">  
+        <small>
+          The Mini Olympics web application | JHDC
+        </small>
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <% if logged_in?  %>
+              <% if current_user.admin? %>
+                <li><%= link_to "Home", admin_user_profile_path(current_user, @Profile) %></li>
+                <li><%= link_to "Teams", teams_path %></li>
+                <li><%= link_to "Sports", sports_path %></li>
+              <% else %>
+                <li><%= link_to "Home", user_profile_path(current_user, @Profile) %></li>
+                <li><%= link_to "Help", help_path %></li>
+                <li><%= link_to "Teams", teams_path %></li>
+                <li><%= link_to "Sports", sports_path %></li>
+                <li><%= link_to "Registration", select_team_user_path(current_user) %></li>
+              <% end %>
+              <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+              <% else %>
+                <li><%= link_to "Home", root_path %></li>
+                <li><%= link_to "Help", help_path %></li>
+                <li><%= link_to "Log In", login_path %></li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  <!-- </div> -->
 </footer>

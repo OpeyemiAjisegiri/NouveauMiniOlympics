@@ -43,6 +43,13 @@ class Admin::TeamsControllerTest < ActionController::TestCase
     assert_redirected_to user_profile_path(@other_user)
   end
 
+
+  test "should redirect create when not logged in" do
+    get :create, id: @team
+    assert_not flash.empty?
+    assert_redirected_to login_url
+  end
+
   test "should redirect edit when not logged in" do
     get :edit, id: @team
     assert_not flash.empty?

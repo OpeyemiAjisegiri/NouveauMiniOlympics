@@ -1,0 +1,8 @@
+<h1>Winning Teams</h1>
+<p> Gold :   <%= link_to gold_teamName(@sport.teams, @sport.medal.gold_id),        @medal %>  </p>
+<p> Silver : <%= link_to silver_teamName(@sport.teams, @sport.medal.silver_id),    @medal %> </p>
+<p> Bronze : <%= link_to bronze_teamName(@sport.teams, @sport.medal.bronze_id),    @medal %></p>
+<% if current_user.admin? %>
+    <%= link_to "Assign medals to Winning teams",      edit_admin_sport_medal_path(@sport) %>
+<% end %>
+

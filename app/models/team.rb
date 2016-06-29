@@ -7,9 +7,11 @@ class Team < ActiveRecord::Base
 	#, :through => :user
 	has_many :users     #, inverse_of: :teams
 
-	has_many :teamsports             #, autosave: true
-	has_many :sports, :through => :teamsports
 
+    #retained with the possibility of switching from HABTM to has_many :through between sports and teams
+	#has_many :teamsports             #, autosave: true
+	#has_many :sports, :through => :teamsports
+    has_and_belongs_to_many :sports, join_table: :teamsports
 
     #after_save :set_default_captain
     after_create :team_sport_association
@@ -17,11 +19,19 @@ class Team < ActiveRecord::Base
 	#might have to switch the above line to 'after_create' as 
     #a new association with every  team is created with every save while using 'after_save'
    
+
+
     accepts_nested_attributes_for :users
 	#accepts_nested_attributes_for :profiles
 	accepts_nested_attributes_for :captain
-	accepts_nested_attributes_for :teamsports
 	accepts_nested_attributes_for :sports
+
+
+	#retained with the possibility of switching from HABTM to has_many :through between sports and teams
+	#accepts_nested_attributes_for :teamsports
+
+
+
 
 	#def set_default_captain
 	# if captain_id.changed?

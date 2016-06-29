@@ -5,13 +5,16 @@
       <h1>
         <%= @sport.sportname %>
       </h1>
-      <p>
+      <h2>
         <%= label = "Participating Teams:" %>
-        <br>
+      </h2>
         <ul class="teams">
           <% @sport.teams.each do |teams| %>
              <%= render teams %>
           <% end %>
+          <br><br>
+          <%= render partial: 'admin/medals/medal', :formats => [:html] %>
+    </section>
         </ul>
       </p>
     </section>

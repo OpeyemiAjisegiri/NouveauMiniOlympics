@@ -1,0 +1,13 @@
+<% provide(:title, "Assign Medals for "+ @medal.sport.sportname ) %>
+<h1><%= "Assign Medal for " + @medal.sport.sportname %></h1>
+<br><br>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for [:admin,:sport, @medal] do |f| %>     
+       <%= render 'fields', f: f %>
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

@@ -1,6 +1,9 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "Mini Olympics", root_path, id: "logo" %>
+    <nav>
+      <!--<a href="http://www.jesushousedc.org"><img src="assets/JHDClogo.png", alt="Mini Olympics" /></a> -->
+      <a href="http://www.jesushousedc.org"><%= image_tag("JHDClogo.png",alt: "Mini Olympics" )%></a>
+    </nav>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in?  %>
@@ -12,7 +15,6 @@
           <% else %>
             <li><%= link_to "Home", user_profile_path(current_user, @Profile) %></li>
           <% end %>
-          <li><%= link_to "Help", help_path %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               Account <b class="caret"></b>
@@ -36,20 +38,18 @@
                  <li><%= link_to "Change Password", edit_user_path(current_user) %></li>
               <% end %>
               <li class="divider"></li>
-              <li>
-                <%= link_to "Log out", logout_path, method: "delete" %>
-              </li>
+              <!-- <li><%= link_to "Log out", logout_path, method: "delete" %></li> -->
+              <li><a href="/logout" rel="nofollow" data-method="delete"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
             </ul>
           </li>
         <% else %>
           <li><%= link_to "Home",    root_path %></li>
-          <li><%= link_to "Help",    help_path %></li>
-           <li><%= link_to "Log In", login_path %></li> 
-          <!-- <li><a href= /login ><span class="glyphicon glyphicon-log-in"></span> Log In</a></li> -->
+          <!--  <li><%= link_to "Log In", login_path %></li> --> 
+           <!-- <li><a href= /login ><span class="glyphicon glyphicon-log-in"></span> Log In</a></li> -->
+          <!-- <li><a href= /login class="glyphicon glyphicon-log-in"><%= link_to "Log In" %></a></li> -->
+          <li><a href= "/login" class="glyphicon glyphicon-log-in" >Log In</a></li>
         <% end %>
       </ul>
     </nav>
   </div>
-  
-
 </header>

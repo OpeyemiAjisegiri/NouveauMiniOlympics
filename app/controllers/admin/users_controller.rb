@@ -10,6 +10,8 @@ class Admin::UsersController < ApplicationController
   def new
   	@user = User.new
     @profile = @user.build_profile
+    ### Works just as would the after_create callback function
+    ### due to user inputing data through the form
   end
 
   def create

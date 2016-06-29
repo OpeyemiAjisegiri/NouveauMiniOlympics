@@ -1,0 +1,48 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+one: 
+  sport: one
+  # Not sure how to do but i need to make the medal's foreign keys 
+  # equal the team ids of the team they assigned to
+  gold: 2
+  silver: 3  
+  bronze: 4
+
+two: 
+  sport: two
+  # Not sure how to do but i need to make the medal's foreign keys 
+  # equal the team ids of the team they assigned to
+  gold: 5
+  silver: 3
+  bronze: 1
+
+three: 
+  sport: three
+  # Not sure how to do but i need to make the medal's foreign keys 
+  # equal the team ids of the team they assigned to
+  gold: 1
+  silver: 4
+  bronze: 3
+
+four: 
+  sport: four
+  # Not sure how to do but i need to make the medal's foreign keys 
+  # equal the team ids of the team they assigned to
+  gold: 2
+  silver: 4
+  bronze: 3
+
+five: 
+  sport: five
+  # Not sure how to do but i need to make the medal's foreign keys 
+  # equal the team ids of the team they assigned to
+  gold: 4
+  silver: 3
+  bronze: 1
+
+six: 
+  sport: six
+  # Not sure how to do but i need to make the medal's foreign keys 
+  # equal the team ids of the team they assigned to
+  gold: 1
+  silver: 2
+  bronze: 5

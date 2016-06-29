@@ -2,7 +2,6 @@ require 'test_helper'
 
 class Admin::ProfilesEditTest < ActionDispatch::IntegrationTest
  
-
   def setup
     @user = users(:michael)
     @user.profile = profiles(:curtis)
