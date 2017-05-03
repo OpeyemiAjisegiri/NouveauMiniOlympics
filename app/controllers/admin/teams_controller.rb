@@ -58,7 +58,7 @@ class Admin::TeamsController < ApplicationController
   private
 
     def team_params
-    	params.require(:team).permit(:id, :teamname, :teamcolor )
+    	params.require(:team).permit(:id, :teamname, :teamcolor, :golds_count, :silvers_count, :bronzes_count )
     end
 
     # Confirms a logged-in user.

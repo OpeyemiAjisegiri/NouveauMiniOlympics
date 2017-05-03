@@ -1,9 +1,6 @@
 class Admin::MedalsController < ApplicationController
 	before_action :admin_user, only: [ :edit, :update]
-    #before_action :logged_in_user, only: [ :index]
 
-    #### Have to find a way of redirecting routing paths like "~/admin/teams/:team_id/medal/edit" 
-    #### from hitting controller and throwing an error.
 
   def show
     redirect_to admin_sport_path(Sport.find(params[:sport_id]))
@@ -18,14 +15,14 @@ class Admin::MedalsController < ApplicationController
     @medal = Sport.find(params[:sport_id]).medal
   	#@medal = Medal.find(params[:id]) 
     # Throws an error as it's trying to locate the medal using medal's id which isn't provided in the url
-    #@medal.update_attribute(:gold_id,   @medal.gold_id)
-    #@medal.update_attribute(:silver_id, @medal.silver_id)
-    #@medal.update_attribute(:bronze_id, @medal.bronze_id)
     if @medal.update_attributes(medal_params)
-
+     # @team = Team.find_by(id: Sport.find(params[:sport_id]).medal.gold_id)
+      #debugger
+      #@team.increment(:NumOfGold, 1)
+      #Team.find(Sport.find(params[:sport_id]).medal.silver_id).increment!(:NumOfSilver, 1)
+      #Team.find(Sport.find(params[:sport_id]).medal.bronze_id).increment!(:NumOfBronze, 1)
    	  flash[:success] = "Medal Assigned"
   	  redirect_to admin_sport_path(Sport.find(params[:sport_id]))
-      #redirect_to admin_sport_medal_path(@sport)
   	else
   	  render 'edit'
   	end 

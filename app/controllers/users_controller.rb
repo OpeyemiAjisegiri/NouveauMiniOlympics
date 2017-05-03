@@ -72,10 +72,9 @@ class UsersController < ApplicationController
     current_user.update_attribute(:team_id, @team)
   end
 
-  def team_selection
-
-    "redirect_to user_profile_path(current_user)"
-  end
+  #def team_selection
+  #  "redirect_to user_profile_path(current_user)"
+  #end
 
 
   private

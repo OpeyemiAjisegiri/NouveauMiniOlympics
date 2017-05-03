@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
+  #get 'results/show'
+  get 'results' => 'results#show'
+
   resources :users do
     get :select_team, on: :member
     resource :profile, only: [:show, :edit, :update ] 
@@ -26,15 +29,23 @@ Rails.application.routes.draw do
   
   namespace :admin do
     resources :users do
-      #get :select_team, on: :member
       resource :profile, only: [:show, :edit, :update ] 
     end
     resources :teams
     resources :sports do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-        resource :medal, only: [:show, :edit, :update ]
+      #get :medals, on: :member "does the same job as the lines same as below"
+      #patch :assign_medal, on: :member "does the same job as the lines same as below"
+      member do
+        get 'medals'
+        match 'assign_medal'  => 'sports#assign_medal', via: [:patch, :post]
+        # post 'toggle'
+      end
+      
+      #### Might not be neccesarily needed.
+      #resource :gold , only: [:show, :edit, :update ]
+      #resource :silver , only: [:show, :edit, :update ]
+      #resource :bronze , only: [:show, :edit, :update ]
+
       end
     end
 

@@ -1,0 +1,27 @@
+<% provide(:title, "Assign Medals for " + @sport.sportname) %>
+<h1><%= "Assign Medal for " + @sport.sportname %></h1>
+<br><br>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for [:admin, setup_sport(@sport)], html: {method: :patch}, url: assign_medal_admin_sport_path(@sport) do |a| %>     
+        <%= a.fields_for :gold do |e| %>
+          <%= e.label :gold %>
+          <%= e.collection_select :team, Team.order(:teamname), :id,:teamname, :prompt => 'Select One', class: 'form-control' %> 
+        <% end %>
+
+        <%= a.fields_for :silver do |f| %>
+          <%= f.label :silver %>
+          <%= f.collection_select :team, Team.order(:teamname), :id,:teamname, :prompt => 'Select One', class: 'form-control' %>
+        <% end %>
+
+        <%= a.fields_for :bronze do |g| %>
+          <%= g.label :bronze %>
+          <%= g.collection_select :team, Team.order(:teamname), :id,:teamname, :prompt => 'Select One', class: 'form-control' %>
+        <% end %>
+
+      <%= a.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

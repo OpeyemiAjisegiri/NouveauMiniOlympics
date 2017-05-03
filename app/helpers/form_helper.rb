@@ -5,7 +5,9 @@ module FormHelper
   end
 
   def setup_sport(sport)
-    sport.medal ||= Medal.new
+  	(sport.gold ||= Gold.new) #&& (sport.silver ||= Silver.new) && (sport.bronze ||= Bronze.new)
+  	#(medal.gold ||= Gold.new) 
+    #sport.medal ||= Medal.new
     sport  	
   end
 end

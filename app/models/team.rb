@@ -6,18 +6,17 @@ class Team < ActiveRecord::Base
 	has_one  :captain, :class_name => "User", :foreign_key => :captain_id
 	#, :through => :user
 	has_many :users     #, inverse_of: :teams
-
-
+	has_many :golds     #, inverse_of: :team, :dependent => :destroy
+	has_many :silvers   #, inverse_of: :team, :dependent => :destroy
+	has_many :bronzes   #, inverse_of: :team, :dependent => :destroy
+ 
     #retained with the possibility of switching from HABTM to has_many :through between sports and teams
 	#has_many :teamsports             #, autosave: true
 	#has_many :sports, :through => :teamsports
-    has_and_belongs_to_many :sports, join_table: :teamsports
+    has_and_belongs_to_many :sports, :dependent => :destroy, join_table: :teamsports
 
     #after_save :set_default_captain
     after_create :team_sport_association
-	#after_save :team_sport_association
-	#might have to switch the above line to 'after_create' as 
-    #a new association with every  team is created with every save while using 'after_save'
    
 
 

@@ -11,20 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506205940) do
+ActiveRecord::Schema.define(version: 20170112045128) do
 
-  create_table "medals", force: true do |t|
+  create_table "bronzes", force: true do |t|
     t.integer  "sport_id"
-    t.integer  "gold_id"
-    t.integer  "silver_id"
-    t.integer  "bronze_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "medals", ["bronze_id"], name: "index_medals_on_bronze_id", using: :btree
-  add_index "medals", ["gold_id"], name: "index_medals_on_gold_id", using: :btree
-  add_index "medals", ["silver_id"], name: "index_medals_on_silver_id", using: :btree
+  add_index "bronzes", ["sport_id"], name: "index_bronzes_on_sport_id", using: :btree
+  add_index "bronzes", ["team_id"], name: "index_bronzes_on_team_id", using: :btree
+
+  create_table "golds", force: true do |t|
+    t.integer  "sport_id"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "golds", ["sport_id"], name: "index_golds_on_sport_id", using: :btree
+  add_index "golds", ["team_id"], name: "index_golds_on_team_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -38,6 +45,16 @@ ActiveRecord::Schema.define(version: 20160506205940) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "silvers", force: true do |t|
+    t.integer  "sport_id"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "silvers", ["sport_id"], name: "index_silvers_on_sport_id", using: :btree
+  add_index "silvers", ["team_id"], name: "index_silvers_on_team_id", using: :btree
+
   create_table "sports", force: true do |t|
     t.string   "sportname"
     t.datetime "created_at"
@@ -47,6 +64,9 @@ ActiveRecord::Schema.define(version: 20160506205940) do
   create_table "teams", force: true do |t|
     t.string   "teamname"
     t.string   "teamcolor"
+    t.integer  "golds_count",   default: 0
+    t.integer  "silvers_count", default: 0
+    t.integer  "bronzes_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

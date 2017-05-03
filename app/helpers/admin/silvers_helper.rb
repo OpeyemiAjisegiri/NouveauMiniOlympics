@@ -1,0 +1,2 @@
+module Admin::SilversHelper
+end

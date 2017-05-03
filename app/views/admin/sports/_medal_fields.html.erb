@@ -1,0 +1,9 @@
+    <%= f.label :gold %>
+    <%= f.collection_select :team_id, Team.order(:teamname), :id,:teamname, :prompt => 'Select One', class: 'form-control' %>
+
+
+    <%= f.label :silver %>
+    <%= f.collection_select :silver, Team.order(:teamname), :id,:teamname, :prompt => 'Select One', class: 'form-control' %>
+
+    <%= f.label :bronze %>
+    <%= f.collection_select :bronze, Team.order(:teamname), :id,:teamname, :prompt => 'Select One', class: 'form-control' %>

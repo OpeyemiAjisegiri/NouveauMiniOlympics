@@ -1,53 +1,52 @@
 class Sport < ActiveRecord::Base
 
-
-	validates :sportname, presence: true, 
-	                         uniqueness: { case_sensitive: false }
-
+	validates :sportname, presence: true, uniqueness: { case_sensitive: false }
 
 	#retained with the possibility of switching from HABTM to has_many :through between sports and teams
     #has_many :teamsports         #, autosave: true
 	#has_many :teams, :through => :teamsports
-	has_and_belongs_to_many :teams, join_table: :teamsports
+	has_and_belongs_to_many :teams, :dependent => :destroy, join_table: :teamsports
 
-    has_one :medal, inverse_of: :sport
-	has_one :gold
-	has_one :silver
-	has_one :bronze
+    #as_many :medals, inverse_of: :sport, :dependent => :destroy
+
+    ##has_one :gold, :class_name => "Medal", :foreign_key => :gold_id
+	has_one :gold  , inverse_of: :sport, :dependent => :destroy  #,   autosave: true    
+	has_one :silver, autosave: true    #, inverse_of: :sport, :dependent => :destroy
+	has_one :bronze, autosave: true    #, inverse_of: :sport, :dependent => :destroy
 
 	accepts_nested_attributes_for :teams
-	####  MEDAL  ######
-	accepts_nested_attributes_for :medal
-	accepts_nested_attributes_for :gold
-	accepts_nested_attributes_for :silver
-	accepts_nested_attributes_for :bronze
+
+
+	# Not needed as i'm not currently taking in any input from sport's form for medals' creation
+	# which means i dont need "accepts_nested_attributes_for" for any of the medals.
+	# Also, "accepts_nested_attributes_for" sets :autosave to true, by default.
 
 	#retained with the possibility of switching from HABTM to has_many :through between sports and teams
     #accepts_nested_attributes_for :teamsports
-
-
-    after_create :build_default_medal
-	after_create :team_sport_association
-	#after_save :team_sport_association
-	#might have to switch the above line to 'after_create' as 
-    #a new association with every  team is created with every save while using 'after_save'
-
-    # I think it needs to be in the concern folder for the controller, 
-    # as the first line in the function works when in the create function of sports controller 
-    #but moving it to the model did work nor adding the finally line to save.
-    #def team_sport_association
-    #	self.teams<< teams
-    #	self.teams.save
-	#end
+    #accepts_nested_attributes_for :gold    #weirdly throws the error "undefined method create"
 
    
-	def build_default_medal
-		Medal.create(sport: self)
+    after_create :build_default_medals
 
-		#Medal.gold.create(sport: self)
-		#Medal.silver.create(sport: self)
-		#Medal.bronze.create(sport: self)
-	end
+    #after_create :create_gold
+    #before_create :build_default_medals      	
+    #before_save :build_default_medals, on: :create   # Works perfectly well too
+    # To create and associate medals before Sport is saved in the DB so that the medals are in the DB too.
+    after_create :team_sport_association, on: :create
+   
+
+    def build_default_medals
+
+    	self.create_gold  
+    	self.create_silver
+    	self.create_bronze
+
+        ## If using :autosave
+    	#self.build_gold(team: nil)
+    	#self.build_silver(team: nil)
+    	#self.build_bronze(team: nil)
+    end
+   
     
 	def team_sport_association
 		#if self.save        #### not needed and causes an infinitely recursive loop 

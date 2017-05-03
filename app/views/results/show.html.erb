@@ -1,0 +1,14 @@
+<h1>Results</h1>
+<p>Find me in app/views/results/show.html.erb</p>
+
+
+<ul class="teams">
+  <% @teams.each do |team| %>
+    <li>
+      <%=  link_to team.teamname,         team %>   |
+      <%=  NumOfMedal(team.NumOfGold) %>     |
+      <%=  NumOfMedal(team.NumOfSilver) %>   |    
+      <%=  NumOfMedal(team.NumOfBronze) %>  
+    </li>
+  <% end %>
+</ul>

@@ -1,34 +1,20 @@
 class Admin::SportsController < ApplicationController
   #include TeamSportAssociation
 
-  before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
+  before_action :admin_user, only: [:new, :create, :edit, :update, :destroy, :medals, :assign_medal]
   before_action :logged_in_user, only: [ :index]
   
   def new
   	@sport  = Sport.new
-   # @medal = @sport.build_medal   
-    ### The line @medal = @sport.build_medal is currently working as
-    ### i'm using a hidden field in the sport new
-    ### form but i could also do the call back for security reasons 
-    ### (due to user input and possible accesibility), any user can see it by just right clicking 
-    ### and checking for the page source (major security issue) but having issues using that with seeding the DB.
-    ### The after_create callback creates another column for the sport filled with nill
-    ### after persisting the data I want seeding for the sport's medal.
-    ### Also, when  I change to the callback function, i need to take off the medal attributes 
-    ### off the whitelisted sport attributes in the permit function.
+    #@gold = @sport.build_gold
   end
 
   def create
   	@sport = Sport.new(sport_params)
-    #@sport.teams<< Team.all
-    ########  Could also be done by just adding the above line
-    ######## to a callback method in the sports model.
-    if @sport.save
+    if @sport.save!
+      #@gold = @sport.medals.gold.create(team: nil)
+      #@sport.gold = @sport.create_gold(team: nil)
       flash[:success] = "Sport created."
-      ## The line below works but i prolly need to move or switch it depending on if
-      ## i need / want the association to be created
-      ## when a user registers to play the sport or when both the sport and teams are created.
-      ## @sport.teams<< current_user.team     #@teams# @team.all 
       redirect_to admin_sport_path(@sport)
     else
       flash[:error_messages]
@@ -54,7 +40,6 @@ class Admin::SportsController < ApplicationController
     if @sport.update_attributes(sport_params)
    	  flash[:success] = "Sport updated"
       redirect_to admin_sport_path(@sport)
-  	  #redirect_to @sport
   	else
   	  render 'edit'
   	end 	
@@ -66,13 +51,34 @@ class Admin::SportsController < ApplicationController
   	redirect_to sports_url  	
   end
 
+  def medals
+    @sport = Sport.find(params[:id]) 
+    #redirect_to assign_medal_admin_sport_path(@sport)
+  end
+
+  def assign_medal
+   
+    ###Sport.find(params[:id]).gold.update_attribute(:team, Team.find(params[:sport][:gold][:team]))   # asigns the foreign key and updates the team's gold counter twice.
+
+     
+    @sport = Sport.find(params[:id])
+    @sport.gold.update_attributes(team_id: Team.find(params[:sport][:gold][:team]).id)
+    @sport.silver.update_attributes(team_id: Team.find(params[:sport][:silver][:team]).id)
+    @sport.bronze.update_attributes(team_id: Team.find(params[:sport][:bronze][:team]).id)
+          
+    redirect_to admin_sport_path(Sport.find(params[:id]))
+  end
+
   private
 
     def sport_params
-    	params.require(:sport).permit(:id, :sportname, medal_attributes: [:id])   
-      #, :sport_id, :gold_id, :silver_id, :bronze_id])  
-      ### Foreign keyshould never be whitelisted and avalable for editting!!!!!
+    	params.require(:sport).permit(:id, :sportname)        
+            # Not accepting any input from forms on medal creation through sports  
     end
+
+    #def sportMedal_params
+    #  params.require(:sport).permit({gold: [:team]})
+    #end
 
     # Confirms a logged-in user.
     def logged_in_user

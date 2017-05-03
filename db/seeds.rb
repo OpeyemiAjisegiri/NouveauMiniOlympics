@@ -14,8 +14,7 @@ User.create!( email: "example@test.org",
               # An attempt no to go through "Team.users.create()" for every team.... might end up doing just that
               #team: Team.where(teamname: "White Angels"),
               profile_attributes: {       
-              ## This style of seeding won't work with callback functions, 
-              ## only works with input from forms.     
+              ## This style of seeding won't work with callback functions, only works with input from forms.     
                 name: "Example Test",
                 street: "75 Barracks Rd",
                 city: "Water",
@@ -25,30 +24,9 @@ User.create!( email: "example@test.org",
               }
             )
 
-#### Trying to remove the line "team_id: rand(1..4)"
-#99.times do |n|
-#  User.create!(
-#    email: Faker::Internet.safe_email, # "name@example.org"
-#    password: 'password',
-#    password_confirmation: 'password',
-#    team_id: rand(1..4),
-#    profile_attributes: {
-#      name: Faker::Name.name,
-#      street: Faker::Address.street_address,
-#      city: Faker::Address.city,
-#      state: Faker::Address.state_abbr,
-#      zipcode: Faker::Address.zip_code
-#    }
-#  )
-#end
-
-
 Team.create([{ teamname: "White Angels", teamcolor: "white"},  { teamname: "Blue Panthers", teamcolor: "blue"},
              { teamname: "silver Hawks", teamcolor: "silver"}, { teamname: "Globe Trotters", teamcolor: "red"}])
 
-# works perfectly
-### One Can also use 'Team.first.users.create' to create the user for users for the first team 
-### and the 'captain_id' becomes 'Team.first.id' "or 'Team.id', if it works"
 Team.first.users.create(   
     email: Faker::Internet.safe_email, 
     password: 'password',
@@ -67,7 +45,6 @@ Team.first.users.create(
     email: Faker::Internet.safe_email, # "name@example.org"
     password: 'password',
     password_confirmation: 'password',
-#    team_id: rand(1..4),
     profile_attributes: {
       name: Faker::Name.name,
       street: Faker::Address.street_address,
@@ -95,7 +72,6 @@ Team.second.users.create(
     email: Faker::Internet.safe_email, # "name@example.org"
     password: 'password',
     password_confirmation: 'password',
-#    team_id: rand(1..4),
     profile_attributes: {
       name: Faker::Name.name,
       street: Faker::Address.street_address,
@@ -123,7 +99,6 @@ Team.third.users.create(
     email: Faker::Internet.safe_email, # "name@example.org"
     password: 'password',
     password_confirmation: 'password',
-#    team_id: rand(1..4),
     profile_attributes: {
       name: Faker::Name.name,
       street: Faker::Address.street_address,
@@ -134,7 +109,6 @@ Team.third.users.create(
   )
 end
 
-# Number 4 is not seeding for some weird reason.....
 Team.fourth.users.create(                  
     email: Faker::Internet.safe_email, 
     password_confirmation: 'password',
@@ -151,7 +125,6 @@ Team.fourth.users.create(
     email: Faker::Internet.safe_email, # "name@example.org"
     password: 'password',
     password_confirmation: 'password',
-#    team_id: rand(1..4),
     profile_attributes: {
       name: Faker::Name.name,
       street: Faker::Address.street_address,
@@ -162,12 +135,12 @@ Team.fourth.users.create(
   )
 end
 
-Sport.create(sportname: "100M Race")     #, medal_attributes: { gold_id: Team.first.id, silver_id: Team.third.id, bronze_id: Team.second.id})
-Sport.create(sportname: "Soccer")        #, medal_attributes: { gold_id: Team.second.id, silver_id: Team.fourth.id, bronze_id: Team.third.id})
-Sport.create(sportname: "Tug of War")    #, medal_attributes: { gold_id: Team.second.id, silver_id: Team.third.id, bronze_id: Team.first.id})
-Sport.create(sportname: "Sack Race")    #, medal_attributes: { gold_id: Team.first.id, silver_id: Team.fourth.id, bronze_id: Team.third.id})
-Sport.create(sportname: "Relay Race")    #, medal_attributes: { gold_id: Team.fourth.id, silver_id: Team.third.id, bronze_id: Team.second.id})
-    
+Sport.create([{sportname: "100M Race"},{sportname: "Soccer"},{sportname: "Tug of War"},{sportname: "Sack Race"},{sportname: "Relay Race"}])  
+##### Also works, if each one is broken down into "Sport.create(sportname: "Random Name")" though won't have the power of Sport.first et al...
+
+#Sport.first.gold.team_id  =  Team.second.id, Sport.first.silver.team_id = Team.third.id, Sport.first.bronze.team_id = Team.fourth.id
+# The above line didnt update the team's foreign keys in the medal's tables. 
+# Try Gold.team = Team.second   ......really not different
 
 
 #### The lines below both do the same thing i.e. inverse of one another, giving the same result
@@ -175,10 +148,3 @@ Sport.create(sportname: "Relay Race")    #, medal_attributes: { gold_id: Team.fo
 #### thereby making both lines redundant; adding extra and unneccesary records to the join table.
 #Sport.all.each{|sport| sport.teams<< Team.all }
 #Team.all.each{ |team| team.sports<< Sport.all }
-
-#Sport.first.medal.create(
-  #### Medal has no create function making this function throw an error.
-#  gold: Team.first.id, 
-#  silver: Team.third.id,
-#  bronze: Team.second.id
-#  )
