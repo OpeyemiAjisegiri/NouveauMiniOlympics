@@ -5,15 +5,18 @@
       <h1>
         <%= @sport.sportname %>
       </h1>
+      <br>
+      <p><%= link_to "Change Sport's Name", edit_admin_sport_path(@sport) %><p>
+      <br>
       <h2>
         <%= label = "Participating Teams:" %>
       </h2>
-        <ul class="teams">
-          <% @sport.teams.each do |teams| %>
-             <%= render teams %>
-          <% end %>
-          <br><br>
-         
+      <ul class="teams">
+        <% @sport.teams.each do |teams| %>
+          <%= render teams %>
+      <% end %>
+      <br><br>
+      <p><%= link_to "Assign Medals", medals_admin_sport_path(@sport) %><p>
     </section>
   </aside>
 </div>
