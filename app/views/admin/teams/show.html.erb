@@ -12,6 +12,16 @@
         <%= label = "Team Captain:" %>
         <%= captain_name(@team.captain) %><br>
       </p>
+      <!-- <p><%= link_to "Select/Change Captain", captain_admin_team_path(@team) %></p>-->
+
+      <% if current_user.admin? && @team.captain != nil %>
+        <p><%= link_to "Change Captain", captain_admin_team_path(@team),
+                                  data: { confirm: "You sure?" } %></p>
+      <% else %>
+        <p><%= link_to "Select/Change Captain", captain_admin_team_path(@team) %></p>
+      <% end %>
+
+
       <br>
       <p><%= link_to "Edit Team", edit_admin_team_path(@team) %>
       </p>
@@ -19,9 +29,10 @@
       <p>
         <%= label = "Team Members:" %>
         <ul class="users">
-          <% @team.users.each do |users| %>
+          <% @teams.each do |users| %>
              <%= render users %>
           <% end %>
+      </p>
     </section>
   </aside>
 </div>

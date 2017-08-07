@@ -1,6 +1,6 @@
 class Admin::TeamsController < ApplicationController
 
-  before_action :admin_user,     only: [:new, :create, :edit, :update, :destroy]
+  before_action :admin_user,     only: [:new, :create, :edit, :update, :destroy, :captain, :select_captain]
   #before_action :logged_in_user, only: [ :index]
 
   def new
@@ -39,14 +39,14 @@ class Admin::TeamsController < ApplicationController
   end
 
   def update
-  	  @team = Team.find(params[:id]) 
-  	  if @team.update_attributes(team_params)
-  		flash[:success] = "Team updated"
+  	@team = Team.find(params[:id]) 
+  	if @team.update_attributes(team_params)
+  	  flash[:success] = "Team updated"
   		redirect_to admin_team_path(@team)
       #redirect_to @team
-  	  else
+  	else
   		render 'edit'
-  	  end
+  	end
   end
 
   def destroy
@@ -55,10 +55,30 @@ class Admin::TeamsController < ApplicationController
   	redirect_to teams_url
   end
 
+  def captain
+    @team = Team.find(params[:id]) 
+    #redirect_to assign_medal_admin_sport_path(@sport)
+  end
+
+  def assign_captain
+    @team =Team.find(params[:id])
+    if @team.captain.nil?
+      #@team.captain = @team.users.find(params[:team][:user][:id])
+      ## Works but would rather have both lines in symmetry
+      @team.captain = User.find(params[:team][:user][:id])
+    else
+      @team.captain = nil
+      #@team = @team.users.find(params[:team][:user][:id])
+      ### Messes up rails recognition of the team's id
+      @team.captain = User.find(params[:team][:user][:id])
+    end
+    redirect_to admin_team_path(@team)
+  end
+
   private
 
     def team_params
-    	params.require(:team).permit(:id, :teamname, :teamcolor, :golds_count, :silvers_count, :bronzes_count )
+    	params.require(:team).permit(:id, :teamname, :teamcolor, :golds_count, :silvers_count, :bronzes_count, user_attributes: [:captain_id] )
     end
 
     # Confirms a logged-in user.

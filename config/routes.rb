@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :teams    #, only: [:show, :index, :update]
+
   resources :sports 
    #, only: [:show, :index, :update] 
   ###### The function to redirect non admins works but without the full resouces for the links to be available, 
@@ -31,7 +32,14 @@ Rails.application.routes.draw do
     resources :users do
       resource :profile, only: [:show, :edit, :update ] 
     end
-    resources :teams
+    resources :teams do 
+      member do
+        get 'captain'
+        match 'select_captain'  => 'teams#assign_captain', via: [:patch, :post]
+      end
+      ##match 'select_captain'  => 'teams#assign_captain', via: [:patch, :post], on: :collection
+      ## Doesn't pick specific team due to it's being collection and not member 
+    end
     resources :sports do
       #get :medals, on: :member "does the same job as the lines same as below"
       #patch :assign_medal, on: :member "does the same job as the lines same as below"

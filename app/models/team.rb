@@ -5,7 +5,7 @@ class Team < ActiveRecord::Base
 	#has_many :profiles, through: :users
 	has_one  :captain, :class_name => "User", :foreign_key => :captain_id
 	#, :through => :user
-	has_many :users     #, inverse_of: :teams
+	has_many :users     , inverse_of: :team
 	has_many :golds     #, inverse_of: :team, :dependent => :destroy
 	has_many :silvers   #, inverse_of: :team, :dependent => :destroy
 	has_many :bronzes   #, inverse_of: :team, :dependent => :destroy

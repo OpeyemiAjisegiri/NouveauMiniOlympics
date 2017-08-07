@@ -10,4 +10,9 @@ module FormHelper
     #sport.medal ||= Medal.new
     sport  	
   end
+
+  def setup_team(team)
+    team.captain ||= User.new
+    team
+  end
 end

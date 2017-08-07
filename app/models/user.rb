@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
     has_many :teammates, :class_name => "User", :foreign_key => :captain_id
     
     belongs_to :captain, :class => "User"
-    belongs_to :team       #, inverse_of: :user
+    belongs_to :team, inverse_of: :users
 
 
 
