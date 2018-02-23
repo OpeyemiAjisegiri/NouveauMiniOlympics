@@ -1,4 +1,4 @@
-class CreateGolds < ActiveRecord::Migration
+class CreateGolds < ActiveRecord::Migration[5.1]
   def change
     create_table :golds do |t|
       t.references :sport,   index: true

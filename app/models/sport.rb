@@ -1,4 +1,8 @@
-class Sport < ActiveRecord::Base
+class Sport < ApplicationRecord
+ 
+        #ApplicationRecord was added in rails -v 5.0, so
+        #ApplicationRecord::ActiveRecord::Base , it inherits from ActiveRecord which inherits from the Base class
+
 
 	validates :sportname, presence: true, uniqueness: { case_sensitive: false }
 

@@ -16,7 +16,7 @@ class Admin::TeamsControllerTest < ActionController::TestCase
     
   test "should redirect create when not logged in as admin user" do
     log_in_as(@other_user)
-    get :create, id: @team
+    get :create, params: { id: @team }
     # Commented out the flash[:danger] in admin_user function in the test controller
     # which led to 'assert' replacing 'assert_not'
     #assert_not flash.empty?
@@ -27,7 +27,7 @@ class Admin::TeamsControllerTest < ActionController::TestCase
 
   test "should redirect edit when not logged in as admin user" do
     log_in_as(@other_user)
-    get :edit, id: @team
+    get :edit, params: { id: @team }
     # Commented out the flash[:danger] in admin_user function in the test controller
     #assert_not flash.empty?
     assert flash.empty?
@@ -36,7 +36,7 @@ class Admin::TeamsControllerTest < ActionController::TestCase
 
   test "should redirect update when not logged in as admin user" do
     log_in_as(@other_user)
-    patch :update, id: @team
+    patch :update, params: { id: @team }
     # Commented out the flash[:danger] in admin_user function in the test controller
     #assert_not flash.empty?
     assert flash.empty?
@@ -45,19 +45,19 @@ class Admin::TeamsControllerTest < ActionController::TestCase
 
 
   test "should redirect create when not logged in" do
-    get :create, id: @team
+    get :create, params: { id: @team }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
   test "should redirect edit when not logged in" do
-    get :edit, id: @team
+    get :edit, params: { id: @team }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
   test "should redirect update when not logged in" do
-    patch :update, id: @team
+    patch :update, params: { id: @team }
     assert_not flash.empty?
     assert_redirected_to login_url
   end

@@ -1,4 +1,10 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
+ 
+        #ApplicationRecord was added in rails -v 5.0, so
+        #ApplicationRecord::ActiveRecord::Base , it inherits from ActiveRecord which inherits from the Base class
+
+
+
 	#attr_accessible :email, :password, :password_confirmation #No longer neededd in rails 4 
 	#due to the advent of strong parameters
 
@@ -10,45 +16,45 @@ class User < ActiveRecord::Base
 	                         format:{with: VALID_EMAIL_REGEX}, 
 	                         uniqueness: { case_sensitive: false }
 
-	has_secure_password
-	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-	#validates :team_id, presence: true
+    has_secure_password
+    validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+    #validates :team_id, presence: true
 
-	has_one :profile, inverse_of: :user, dependent: :delete
-    has_many :teammates, :class_name => "User", :foreign_key => :captain_id
+   has_one :profile, inverse_of: :user, dependent: :delete
+   has_many :teammates, :class_name => "User", :foreign_key => :captain_id
     
-    belongs_to :captain, :class => "User"
-    belongs_to :team, inverse_of: :users
+   belongs_to :captain, :class_name => "User"
+   belongs_to :team, inverse_of: :users
 
 
 
-	#after_create :build_default_profile
-	accepts_nested_attributes_for :profile
-	accepts_nested_attributes_for :team
+   #after_create :build_default_profile
+   accepts_nested_attributes_for :profile
+   accepts_nested_attributes_for :team
 
    
-	def build_default_profile
-		Profile.create(user: self)
-	end
+   def build_default_profile
+      Profile.create(user: self)
+   end
     
-    class << self
-	    #Returns the Hash digest of the given string
-	    def digest(string)
-	        cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+   class << self
+       #Returns the Hash digest of the given string
+       def digest(string)
+          cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
-            BCrypt::Password.create(string, cost: cost)
-	    end
+             BCrypt::Password.create(string, cost: cost)
+      end
 
-	    #Returns a random token. 
-	    def new_token
-		    SecureRandom.urlsafe_base64
-	    end
+         #Returns a random token. 
+      def new_token
+         SecureRandom.urlsafe_base64
+      end
     end
 
-	def remember
-		self.remember_token = User.new_token
-		update_attribute(:remember_digest, User.digest(remember_token))
-	end
+    def remember
+	self.remember_token = User.new_token
+	update_attribute(:remember_digest, User.digest(remember_token))
+    end
     
     #Returns true if the given token matches the digest
     def authenticated?(remember_token)

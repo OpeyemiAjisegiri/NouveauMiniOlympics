@@ -22,7 +22,7 @@ class Admin::SportsEditTest < ActionDispatch::IntegrationTest
   	log_in_as(@user)
     get edit_admin_sport_path(@sport)
     assert_template 'admin/sports/edit'
-    patch admin_sport_path(@sport), sport: {sportname: ""}
+    patch admin_sport_path(@sport), params: { sport: {sportname: ""} }
     assert_template 'admin/sports/edit'
   end
   
@@ -30,7 +30,7 @@ class Admin::SportsEditTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get edit_admin_sport_path(@sport)
     assert_template 'admin/sports/edit'    
-    patch admin_sport_path(@sport), sport: {sportname: "Football"}
+    patch admin_sport_path(@sport), params: { sport: {sportname: "Football"} }
     assert_not flash.empty?
     assert_redirected_to admin_sport_path(@sport)
     #assert_redirected_to @sport

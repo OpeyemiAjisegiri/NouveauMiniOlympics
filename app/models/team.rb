@@ -1,4 +1,4 @@
-class Team < ActiveRecord::Base
+class Team < ApplicationRecord
  
 	validates :teamname, :teamcolor, presence: true,  uniqueness: { case_sensitive: false }
 	  

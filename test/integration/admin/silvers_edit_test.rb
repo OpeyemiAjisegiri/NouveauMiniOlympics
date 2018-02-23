@@ -25,7 +25,7 @@ class Admin::SilversEditTest < ActionDispatch::IntegrationTest
   #  log_in_as(@user)
   #  get medals_admin_sport_path(@sport)
   #  assert_template 'admin/sports/medals'    
-  #  patch assign_medal_admin_sport_path(@sport), sport: {:silver => {[:team] => @team}}  
+  #  patch assign_medal_admin_sport_path(@sport), params: { sport: {:silver => {[:team] => @team}} }
   #  assert flash.empty?
   #  assert_redirected_to admin_sport_path(@sport)
   #  @sport.reload

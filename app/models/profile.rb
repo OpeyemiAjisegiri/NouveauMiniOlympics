@@ -1,4 +1,10 @@
-class Profile < ActiveRecord::Base
+class Profile < ApplicationRecord
+ 
+        #ApplicationRecord was added in rails -v 5.0, so
+        #ApplicationRecord::ActiveRecord::Base , it inherits from ActiveRecord which inherits from the Base class
+
+
+
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :street, :city, :state, :zipcode, presence: true
 

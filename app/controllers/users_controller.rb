@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+ 
+        #ApplicationController was added in rails -v 5.0, so
+        #ApplicationController::ActinController::Base , it inherits from ActionController which inherits from the Base class
+
 
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update, :select_team]

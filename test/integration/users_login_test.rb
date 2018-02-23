@@ -10,7 +10,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   test "login with invalid information" do
     get login_path
     assert_template 'sessions/new'
-    post login_path, session: { email: "", password: "" }
+    post login_path, params: { session: { email: "", password: "" } }
     assert_template 'sessions/new'
     assert_not flash.empty?
     get root_path
@@ -20,7 +20,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
   test "login with valid information" do
     get login_path
-    post login_path, session: { email: @user.email, password: 'password' }
+    post login_path, params: { session: { email: @user.email, password: 'password' } }
     assert is_logged_in?
     assert_redirected_to user_profile_path(@user)
     follow_redirect!
@@ -36,7 +36,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # The test also passed when replacing the line '<li><%= link_to "Log In", login_path %></li>' with '<li><a href= "/login">Log In</a></li>'
   test "login with valid information followed by logout" do
     get login_path
-    post login_path, session: { email: @user.email, password: 'password' }
+    post login_path, params: { session: { email: @user.email, password: 'password' } }
     assert is_logged_in?
     assert_redirected_to user_profile_path(@user)
     follow_redirect!

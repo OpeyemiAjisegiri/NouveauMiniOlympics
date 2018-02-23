@@ -20,27 +20,27 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should redirect edit when not logged in" do
-    get :edit, id: @user
+    get :edit, params: { id: @user }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
   test "should redirect update when not logged in" do
-    patch :update, id: @user, user: { email: @user.email }
+    patch :update, params: { id: @user, user: { email: @user.email } }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
   test "should redirect edit when logged in as wrong user" do
     log_in_as(@other_user)
-    get :edit, id: @user
+    get :edit, params: { id: @user }
     assert flash.empty?
     assert_redirected_to root_url
   end
 
   test "should redirect destroy when not logged in" do
     assert_no_difference 'User.count' do
-      delete :destroy, id: @user
+      delete :destroy, params: { id: @user }
     end
     assert_redirected_to login_url
   end
@@ -48,14 +48,14 @@ class UsersControllerTest < ActionController::TestCase
   test "should redirect destroy when logged in as a non-admin" do
     log_in_as(@other_user)
     assert_no_difference 'User.count' do
-      delete :destroy, id: @user
+      delete :destroy, params: { id: @user }
     end
     assert_redirected_to root_url
   end 
 
   test "should redirect update when logged in as wrong user" do
     log_in_as(@other_user)
-    patch :update, id: @user, user: { email: @user.email }
+    patch :update, params: { id: @user, user: { email: @user.email } }
     assert flash.empty?
     assert_redirected_to root_url
   end
@@ -65,7 +65,7 @@ class UsersControllerTest < ActionController::TestCase
  # It's testing rails' build_assiociation function
   test "associated profile should be created" do
     assert_difference 'Profile.count', 1 do
-      get :create, user:  {email: "test@example.net", password: "example", profile_attributes: {name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456"}}
+      get :create, params: {user:  {email: "test@example.net", password: "example", profile_attributes: {name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456"}}}
       #user.create_profile(name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456")
       assert_not flash.empty?
       # The line below gives an error bout the user_id for the show action

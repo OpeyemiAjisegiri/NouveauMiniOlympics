@@ -11,10 +11,10 @@ class Admin::UsersEditTest < ActionDispatch::IntegrationTest
   	log_in_as(@user)
     get edit_admin_user_path(@user)
     assert_template 'users/edit'
-    patch admin_user_path(@user), user: { name:  "",
+    patch admin_user_path(@user), params: { user: { name:  "",
                                     email: "foo@invalid",
                                     password:              "foo",
-                                    password_confirmation: "bar" }
+                                    password_confirmation: "bar" } }
     assert_template 'admin/users/edit'
   end
 
@@ -24,9 +24,9 @@ class Admin::UsersEditTest < ActionDispatch::IntegrationTest
     assert_template 'admin/users/edit'
     #name  = "Foo Bar"
     email = "foo@bar.com"
-    patch user_path(@user), user: { email: email,
+    patch user_path(@user), params: { user: { email: email,
                                     password:              "",
-                                    password_confirmation: "" }
+                                    password_confirmation: "" } }
     assert_not flash.empty?
     assert_redirected_to admin_user_profile_path(@user)
     # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 
@@ -42,9 +42,9 @@ class Admin::UsersEditTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_admin_user_path(@user)
     #name  = "Foo Bar"
     email = "foo@bar.com"
-    patch admin_user_path(@user), user: { email: email,
+    patch admin_user_path(@user), params: { user: { email: email,
                                     password:              "",
-                                    password_confirmation: "" }
+                                    password_confirmation: "" } }
     assert_not flash.empty?
     assert_redirected_to admin_user_profile_path(@user)
     # Not using 'user_profile_path(@user)' because i'm not using the profile.id to 

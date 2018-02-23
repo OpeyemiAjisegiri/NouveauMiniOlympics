@@ -13,7 +13,7 @@ class ProfilesEditTest < ActionDispatch::IntegrationTest
   	log_in_as(@user)
     get edit_user_profile_path(@user, @profile)
     assert_template 'profiles/edit'
-    patch user_profile_path(@user, @profile), profile: {name: "", street: "", city: "", state: "", zipcode: ""}
+    patch user_profile_path(@user, @profile), params: { profile: {name: "", street: "", city: "", state: "", zipcode: ""} }
     assert_template 'profiles/edit'
   end
   
@@ -22,7 +22,7 @@ class ProfilesEditTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get edit_user_profile_path(@user, @profile)
     assert_template 'profiles/edit'    
-    patch user_profile_path(@user,@profile), profile: { name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456" }
+    patch user_profile_path(@user,@profile), params: { profile: { name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456" } }
     assert_not flash.empty?
     assert_redirected_to user_profile_path(@user, @profile)
     @user.profile.reload
@@ -33,7 +33,7 @@ class ProfilesEditTest < ActionDispatch::IntegrationTest
   #  get edit_user_profile_path(@user,@profile)
   #  log_in_as(@user)
   #  assert_redirected_to edit_user_profile_path(@user,@profile)
-  #  patch user_profile_path(@user,@profiles), profile: { name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456" }
+  #  patch user_profile_path(@user,@profiles), params: { profile: { name: "Micheal Example", street: "24 Martins St.", city: "Waterloo", state: "AW", zipcode: "22456" } }
   #  assert_not flash.empty?
   #  assert_redirected_to user_profile_path(@user, @profile)
   #  @user.profile.reload

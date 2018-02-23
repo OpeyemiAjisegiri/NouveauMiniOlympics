@@ -15,7 +15,7 @@ class Admin::TeamsEditTest < ActionDispatch::IntegrationTest
   	log_in_as(@user)
     get edit_admin_team_path(@team)
     assert_template 'admin/teams/edit'
-    patch admin_team_path(@team), team: {teamname: "", teamcolor: "" }
+    patch admin_team_path(@team), params: { team: {teamname: "", teamcolor: "" } }
     assert_template 'admin/teams/edit'
   end
   
@@ -23,7 +23,7 @@ class Admin::TeamsEditTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get edit_admin_team_path(@team)
     assert_template 'admin/teams/edit'    
-    patch admin_team_path(@team), team: {teamname: "Yellow Giants", teamcolor: "Yellow" }
+    patch admin_team_path(@team), params: { team: {teamname: "Yellow Giants", teamcolor: "Yellow" } }
     assert_not flash.empty?
     assert_redirected_to admin_team_path(@team)
     #assert_redirected_to @team
@@ -44,7 +44,7 @@ class Admin::TeamsEditTest < ActionDispatch::IntegrationTest
     #patch select_captain_admin_team_path(@team), team: { user: @user}  #-- Gives TypeError :- No Implicit Conversion of String into Integer
     ### The line below has a 50% chance of failling when the program is tested on another machine as the user.id 
     ### wa lifted directly from the Test DB to create a manual work around the TypeError in order to confirm a captain was been selected.
-    patch select_captain_admin_team_path(@team), team: { user: {id: 762146111, name: "Bernand Silivito"} }
+    patch select_captain_admin_team_path(@team), params:{ team: { user: {id: 762146111, name: "Bernand Silivito"} }}
     #assert_not flash.empty?
     assert_redirected_to admin_team_path(@team)
     @team.reload

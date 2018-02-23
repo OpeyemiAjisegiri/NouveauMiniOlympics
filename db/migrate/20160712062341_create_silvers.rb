@@ -1,4 +1,4 @@
-class CreateSilvers < ActiveRecord::Migration
+class CreateSilvers < ActiveRecord::Migration[5.1]
   def change
     create_table :silvers do |t|
       t.references :sport,   index: true

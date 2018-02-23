@@ -1,4 +1,4 @@
-class CreateTeamsports < ActiveRecord::Migration
+class CreateTeamsports < ActiveRecord::Migration[5.1]
   def change
     create_table :teamsports do |t|  
     # missing :=>  ', :id => false' before 'do' -- only used in HABTM relationship 

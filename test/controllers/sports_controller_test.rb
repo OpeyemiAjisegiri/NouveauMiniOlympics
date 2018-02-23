@@ -10,7 +10,7 @@ class SportsControllerTest < ActionController::TestCase
 
   test "should get show" do 
     log_in_as(@other_user)
-    get :show, id: @sport     
+    get :show, params: { id: @sport }
     assert_response :success
   end
 
@@ -40,7 +40,7 @@ class SportsControllerTest < ActionController::TestCase
   test "should redirect 'sports/new' when not logged in as Admin" do
     #### pretty much the same as redirecting new when not logged in as an Admin
     log_in_as(@other_user)
-    get :show, id: :new
+    get :show, params: { id: :new }
     #assert_not flash.empty?
     assert_redirected_to user_profile_path(@other_user)
   end
@@ -58,7 +58,7 @@ class SportsControllerTest < ActionController::TestCase
 
   test "should redirect create when not logged in as admin user" do
     log_in_as(@other_user)
-    get :create, id: @sport, sport: {sportname: "Football"}
+    get :create, params: { id: @sport, sport: {sportname: "Football"} }
     # Commented out the flash[:danger] in admin_user function in the test controller
     # which led to 'assert' replacing 'assert_not'
     #assert_not flash.empty?
@@ -69,7 +69,7 @@ class SportsControllerTest < ActionController::TestCase
 
   test "should redirect edit when not logged in as admin user" do
     log_in_as(@other_user)
-    get :edit, id: @sport, sport: {sportname: "Futbal" }
+    get :edit, params:  { id: @sport, sport: {sportname: "Futbal" }}
     # Commented out the flash[:danger] in admin_user function in the test controller
     #assert_not flash.empty?
     assert flash.empty?
@@ -78,7 +78,7 @@ class SportsControllerTest < ActionController::TestCase
 
   test "should redirect update when not logged in as admin user" do
     log_in_as(@other_user)
-    patch :update, id: @sport, sport: {sportname: "Futbal" }
+    patch :update, params: { id: @sport, sport: {sportname: "Futbal" } }
     # Commented out the flash[:danger] in admin_user function in the test controller
     #assert_not flash.empty?
     assert flash.empty?
@@ -87,20 +87,20 @@ class SportsControllerTest < ActionController::TestCase
 
 
   test "should redirect edit when not logged in" do
-    get :edit, id: @sport, sport: {sportname: "Futbal" }
+    get :edit, params: { id: @sport, sport: {sportname: "Futbal" } }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
   test "should redirect update when not logged in" do
-    patch :update, id: @sport, sport: {sportname: "Futbal" }
+    patch :update, params: { id: @sport, sport: {sportname: "Futbal" }}
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
   test "should redirect destroy when not logged in" do
     assert_no_difference 'Sport.count' do
-      delete :destroy, id: @sport
+      delete :destroy, params: { id: @sport }
     end
     assert_redirected_to login_url
   end
@@ -108,7 +108,7 @@ class SportsControllerTest < ActionController::TestCase
   test "should redirect destroy when logged in as a non-admin" do
     log_in_as(@other_user)
     assert_no_difference 'Sport.count' do
-      delete :destroy, id: @sport
+      delete :destroy, params: { id: @sport }
     end
     assert_redirected_to user_profile_path(@other_user)
   end
