@@ -57,7 +57,6 @@ class Admin::TeamsController < ApplicationController
 
   def captain
     @team = Team.find(params[:id]) 
-    #redirect_to assign_medal_admin_sport_path(@sport)
   end
 
   def assign_captain
